@@ -1,0 +1,12 @@
+.table-container {
+	max-height: 320px;
+	overflow-y: auto;
+	margin-bottom: 1rem;
+}
+
+table { width: 100%; }
+
+th { background:#e5edff; color:#1b3e83; font-weight:600; }
+td, th { font-size: 13px; }
+
+button { font-size: 12px; }

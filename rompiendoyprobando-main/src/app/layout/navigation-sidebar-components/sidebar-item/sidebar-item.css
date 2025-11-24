@@ -1,0 +1,63 @@
+/* --- 1. Contenedor Principal del Módulo --- */
+.module-container {
+    margin-bottom: 5px; /* Espacio entre módulos */
+    padding: 0 10px; /* Un poco de padding a los lados dentro del contenedor principal de la barra */
+}
+
+/* --- 2. Encabezado del Módulo (la parte clickeable) --- */
+.module-header {
+    display: flex; /* Permite alinear el texto y el icono de flecha */
+    justify-content: space-between; /* Mueve la flecha al extremo derecho */
+    align-items: center; /* Centra verticalmente el texto y la flecha */
+    padding: 10px 5px; /* Relleno superior/inferior para un buen espacio de clic */
+    color: #444; /* Color de texto principal */
+    font-weight: 600; /* Hace que el nombre del módulo sea prominente */
+    cursor: pointer; /* Indica que es clickeable */
+    user-select: none; /* Evita que el texto sea seleccionado */
+    border-radius: 4px;
+    transition: background-color 0.2s; /* Transición para el efecto hover */
+}
+
+/* Efecto Hover para el encabezado */
+.module-header:hover {
+    background-color: #e9ecef; /* Un fondo gris muy ligero al pasar el ratón */
+}
+
+/* Estilo para cuando el módulo está activo/expandido */
+.module-header.module-expanded {
+    background-color: #f8f9fa; /* Un color de fondo diferente para el estado expandido */
+    color: #1e3a8a; /* Color primario para el texto cuando está expandido */
+}
+
+/* --- 3. Icono de Flecha --- */
+.arrow-icon {
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+    /* Suponiendo que el icono es un carácter de flecha o un SVG/Fuente */
+    /* Puedes usar un carácter de flecha: content: '▼'; */
+    font-size: 0.8em;
+    transform: rotate(0deg); /* Estado inicial: apuntando hacia abajo */
+    transition: transform 0.3s ease; /* Transición suave de rotación */
+    margin-left: 10px;
+    
+}
+
+/* Estado de la flecha cuando el módulo está expandido */
+.arrow-icon.rotated {
+    transform: rotate(180deg); /* Gira 180 grados para apuntar hacia arriba o diferente */
+}
+
+/* --- 4. Lista de Sub-elementos --- */
+.sub-items-list {
+    padding-left: 15px; /* Indenta la lista de sub-elementos */
+    /* Si necesitas una animación de colapso, esta es la clase a modificar,
+       normalmente combinándola con una transición de max-height. */
+}
+
+.arrow-icon-img {
+  width: 24px; /* O el tamaño deseado */
+  height: 24px;
+  transition: transform 0.3s ease-in-out;
+  display: block; /* Asegura que la imagen se comporte correctamente */
+}

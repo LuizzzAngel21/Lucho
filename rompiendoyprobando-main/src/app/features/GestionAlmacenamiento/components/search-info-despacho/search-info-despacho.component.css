@@ -1,0 +1,24 @@
+.search-despacho-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.search-field {
+  width: 320px;
+}
+.error {
+  color: #b00020;
+  font-size: 0.85rem;
+}
+.search-despacho-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+table {
+  width: 100%;
+}
+th {
+  background-color: #f3f6fa;
+  font-weight: 600;
+}

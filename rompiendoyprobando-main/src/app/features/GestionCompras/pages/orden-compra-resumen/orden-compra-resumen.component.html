@@ -1,0 +1,67 @@
+<!-- src/app/GestionCompras/pages/orden-compra-resumen/orden-compra-resumen.component.html -->
+
+<div class="page-container">
+    <h2>Resumen de Orden de Compra N° @if (detalleOrden) { {{idOrden}} }</h2>
+
+    <!-- 1. HEADER / DETALLES DE LA ORDEN -->
+    <mat-card class="card-section order-header">
+        @if (detalleOrden) {
+            <h3>Detalles de la Orden</h3>
+            <div class="detail-grid">
+                <p><strong>N° de Orden:</strong> {{ detalleOrden.idOrden }}</p>
+                <p><strong>N° de Solicitud Origen:</strong> {{ detalleOrden.idSolicitud }}</p>
+                <p><strong>Proveedor Principal:</strong> {{ detalleOrden.proveedorPrincipal }}</p>
+                <p><strong>Fecha Generación:</strong> {{ detalleOrden.fechaGeneracion | date:'dd/MM/yyyy' }}</p>
+                <p><strong>Estado:</strong> {{ detalleOrden.estadoOC }}</p>
+            </div>
+        }
+        
+        <!-- ACCIONES DE IMPRESIÓN/VOLVER -->
+        <div class="header-actions">
+            <button color="primary" (click)="onImprimirOrden()">
+                Imprimir / Descargar
+            </button>
+            <button color="default" [routerLink]="['/GestionCompras/solicitudes-pendientes']">
+                Volver al Inicio
+            </button>
+        </div>
+    </mat-card>
+
+    <!-- 2. TABLA DE PRODUCTOS RESUMEN -->
+    <mat-card class="card-section products-table">
+        <h3>Productos de la Orden</h3>
+        
+        @if (productosResumen && productosResumen.length > 0) {
+                <app-resumen-compra-table [resumen]="productosResumen"></app-resumen-compra-table>
+            } @else {
+                <div class="empty-state centered-content">
+                    <h2>No hay Productos</h2>
+                    <p>La orden no contiene productos detallados.</p>
+                </div>
+        }
+    </mat-card>
+
+    <!-- 3. JUSTIFICACIÓN Y TOTALES -->
+    <div class="footer-summary">
+        <mat-card class="justification-card">
+            <h3>Justificación de la Compra</h3>
+            <p class="justification-text">{{ justificacionCompra || 'No se proporcionó una justificación para esta orden.' }}</p>
+        </mat-card>
+        
+        <mat-card class="totals-card">
+            <h3>Resumen de Costos</h3>
+            <div class="total-row">
+                <span>Subtotal:</span>
+                <span class="value">{{ subtotalGeneral | currency:'USD':'symbol':'1.2-2' }}</span>
+            </div>
+            <div class="total-row">
+                <span>IGV ({{ 0.18 * 100 }}%):</span>
+                <span class="value">{{ igv | currency:'USD':'symbol':'1.2-2' }}</span>
+            </div>
+            <div class="total-row total-final">
+                <strong>Costo Total:</strong>
+                <strong class="value">{{ costoTotal | currency:'USD':'symbol':'1.2-2' }}</strong>
+            </div>
+        </mat-card>
+    </div>
+</div>

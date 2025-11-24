@@ -1,0 +1,63 @@
+<div class="table-container mat-elevation-z2">
+  <table mat-table [dataSource]="incidencias || []" class="full-width">
+
+    <!-- Fecha Reporte Column -->
+    <ng-container matColumnDef="fechaReporte">
+      <th mat-header-cell *matHeaderCellDef> Fecha Reporte </th>
+      <td mat-cell *matCellDef="let element"> 
+        {{element.fechaReporte | date:'dd/MM/yyyy HH:mm'}} 
+      </td>
+    </ng-container>
+
+    <!-- Tipo Incidencia Column -->
+    <ng-container matColumnDef="tipoIncidencia">
+      <th mat-header-cell *matHeaderCellDef> Tipo </th>
+      <td mat-cell *matCellDef="let element"> 
+        {{element.tipoIncidencia}} 
+      </td>
+    </ng-container>
+    
+    <!-- Impacto Column -->
+    <ng-container matColumnDef="impacto">
+      <th mat-header-cell *matHeaderCellDef> Impacto </th>
+      <td mat-cell *matCellDef="let element"> 
+        <span [ngClass]="getImpactoClass(element.impacto)">
+          {{element.impacto}}
+        </span>
+      </td>
+    </ng-container>
+
+    <!-- Lote Afectado Column -->
+    <ng-container matColumnDef="idLoteAfectado">
+      <th mat-header-cell *matHeaderCellDef> Lote Afectado </th>
+      <td mat-cell *matCellDef="let element"> 
+        {{element.idDetalleDist || 'General'}} 
+        <span *ngIf="!element.idDetalleDist" class="text-xs text-gray-500">(Vehículo/Orden)</span>
+      </td>
+    </ng-container>
+    
+    <!-- Descripción Column -->
+    <ng-container matColumnDef="descripcion">
+      <th mat-header-cell *matHeaderCellDef> Descripción </th>
+      <td mat-cell *matCellDef="let element"> 
+        {{element.descripcion}} 
+      </td>
+    </ng-container>
+
+    <!-- Usuario Reporta Column -->
+    <ng-container matColumnDef="usuarioReporta">
+      <th mat-header-cell *matHeaderCellDef> Reportado por </th>
+      <td mat-cell *matCellDef="let element"> {{element.usuarioReporta}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    
+    <!-- Row para cuando no hay incidencias -->
+    <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" [attr.colspan]="displayedColumns.length">
+            No se han registrado incidencias para esta Orden.
+        </td>
+    </tr>
+  </table>
+</div>

@@ -1,0 +1,12 @@
+<app-search-bar-atendidos (filterChange)="onFilter($event)"></app-search-bar-atendidos>
+
+<section *ngIf="currentMode === 'DISTRIBUCION'">
+  <app-orden-distribucion-table [data]="filteredOrdenData" (verDetalle)="openDistribucion($event)"></app-orden-distribucion-table>
+</section>
+
+<section *ngIf="currentMode === 'COMPRAS'">
+  <app-solicitud-compras-table [data]="filteredSolicitudData" (verDetalle)="openSolicitud($event)"></app-solicitud-compras-table>
+</section>
+
+<app-popup-detalle-orden-distribucion *ngIf="showPopupDistribucion" [data]="distribucionDetalle" (close)="showPopupDistribucion=false"></app-popup-detalle-orden-distribucion>
+<app-popup-detalle-solicitud-de-compra *ngIf="showPopupSolicitud" [data]="solicitudDetalle" (close)="showPopupSolicitud=false"></app-popup-detalle-solicitud-de-compra>

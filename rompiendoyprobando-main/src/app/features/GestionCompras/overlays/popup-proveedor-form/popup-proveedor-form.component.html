@@ -1,0 +1,86 @@
+<mat-toolbar color="primary">
+  <span class="dialog-title">{{ dialogTitle }}</span>
+  <span class="spacer"></span>
+  <button  (click)="onCancel()" [disabled]="isLoading">
+    Close
+  </button>
+</mat-toolbar>
+
+<form [formGroup]="proveedorForm" (ngSubmit)="onSubmit()" class="dialog-form">
+    <div mat-dialog-content class="form-content">
+
+        <!-- Campo ID (Solo visible en edición) -->
+        @if (isEditMode) {
+            <div class="form-field-group full-width">
+                <h4>ID del Proveedor:</h4>
+                <input formControlName="id">
+            </div>
+        }
+        
+        <!-- Campo RUC (Requerido en creación, solo lectura en edición) -->
+        <div class="form-field-group full-width">
+            <h4>RUC:</h4>
+            <input formControlName="ruc" type="text">
+            <mat-error *ngIf="f['ruc'].hasError('required')">El RUC es requerido.</mat-error>
+            <mat-error *ngIf="f['ruc'].hasError('pattern')">Formato de RUC inválido (10-15 dígitos).</mat-error>
+
+        </div>
+
+
+        <!-- Campo Nombre Proveedor -->
+        <div class="form-field-group full-width">
+            <h4>Nombre del Proveedor:</h4>
+            <input formControlName="nombreProveedor" maxlength="150">
+            <mat-error *ngIf="f['nombreProveedor'].hasError('required')">El nombre es requerido.</mat-error>
+
+        </div>
+
+        <!-- Campo Dirección -->
+        <div class="form-field-group full-width">
+            <h4>Dirección:</h4>
+            <input formControlName="direccion">
+
+        </div>
+
+        <!-- Campo Teléfono -->
+        <div class="form-field-group full-width">
+            <h4>Teléfono:</h4>
+            <input formControlName="telefono" maxlength="20">
+            
+        </div>
+
+        <!-- Campo Correo -->
+        <div class="form-field-group full-width">
+            <h4>Correo Electrónico:</h4>
+            <input formControlName="correo" type="email" maxlength="150">
+            <mat-error *ngIf="f['correo'].hasError('email')">Correo electrónico inválido.</mat-error>
+            
+        </div>
+        
+        <!-- Campo Estado (Solo visible y editable en edición) -->
+        @if (isEditMode) {
+            <mat-checkbox formControlName="estado" color="primary" class="full-width status-checkbox">
+                Proveedor {{ f['estado'].value ? 'Activo' : 'Inactivo' }}
+            </mat-checkbox>
+        }
+
+    </div>
+
+    <div mat-dialog-actions align="end">
+        <button 
+          type="button" 
+          (click)="onCancel()" 
+          [disabled]="isLoading"
+        >
+          Cancelar
+        </button>
+        
+        <button 
+          color="primary" 
+          type="submit" 
+          [disabled]="proveedorForm.invalid || isLoading"
+        >
+          {{ isEditMode ? 'Guardar Cambios' : 'Registrar Proveedor' }}
+        </button>
+    </div>
+</form>

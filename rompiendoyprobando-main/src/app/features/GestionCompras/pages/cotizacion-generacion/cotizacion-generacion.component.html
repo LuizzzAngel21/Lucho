@@ -1,0 +1,59 @@
+<div class="page-container">
+    <h2>Cotización de Solicitud N° {{idSolicitud}}</h2>
+
+    <mat-card class="card-section request-details">
+        <h3>Detalles de la Solicitud</h3>
+        <div class="detail-grid">
+            <p><strong>Área Solicitante:</strong> [Nombre del Área]</p>
+            <p><strong>Solicitante:</strong> [Nombre del Solicitante]</p>
+            <p><strong>Fecha de Creación:</strong> [DD/MM/YYYY]</p>
+            <p><strong>Motivo:</strong> [Breve descripción del motivo de la solicitud]</p>
+        </div>
+    </mat-card>
+
+    <mat-card class="card-section">
+        <h3>Productos a Cotizar</h3>
+        
+        <app-cotizacion-productos-table
+                    [productos]="productosACotizar"
+                    (seleccionarProveedor)="onAbrirSelectorProveedor($event)"
+                    (productoActualizado)="onProductoActualizado($event)">
+         </app-cotizacion-productos-table>
+    </mat-card>
+    
+    <div class="footer-summary">
+        <mat-card class="justification-card">
+            <h3>Justificación de la Decisión</h3>
+            <textarea 
+                rows="5" 
+                [(ngModel)]="justificacionUsuario"
+                placeholder="Explique el porqué de la selección de proveedores y precios."
+            ></textarea>
+        </mat-card>
+        
+        <mat-card class="totals-card">
+            <h3>Resumen Económico</h3>
+            <div class="total-row">
+                <span>Subtotal:</span>
+                <span class="value">{{ subtotalGeneral | currency:'USD':'symbol':'1.2-2' }}</span>
+            </div>
+            <div class="total-row">
+                <span>IGV ({{ 0.18 * 100 }}%):</span>
+                <span class="value">{{ igv | currency:'USD':'symbol':'1.2-2' }}</span>
+            </div>
+            <div class="total-row total-final">
+                <strong>Costo Total:</strong>
+                <strong class="value">{{ costoTotal | currency:'USD':'symbol':'1.2-2' }}</strong>
+            </div>
+            
+            <button 
+                color="accent" 
+                class="confirm-button"
+                (click)="onConfirmarCompra()"
+                [disabled]="!puedeConfirmarCompra"
+            >
+                Confirmar Compra
+            </button>
+        </mat-card>
+    </div>
+</div>

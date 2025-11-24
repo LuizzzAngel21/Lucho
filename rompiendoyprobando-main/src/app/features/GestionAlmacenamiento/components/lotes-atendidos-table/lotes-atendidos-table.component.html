@@ -1,0 +1,56 @@
+<div class="table-container">
+  <table mat-table [dataSource]="data" class="mat-elevation-z2">
+
+    <ng-container matColumnDef="id_inventario">
+      <th mat-header-cell *matHeaderCellDef> ID Inventario </th>
+      <td mat-cell *matCellDef="let item"> {{ item.id_inventario }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="id_almacen">
+      <th mat-header-cell *matHeaderCellDef> ID Almacén </th>
+      <td mat-cell *matCellDef="let item"> {{ item.id_almacen }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="id_lote">
+      <th mat-header-cell *matHeaderCellDef> ID Lote </th>
+      <td mat-cell *matCellDef="let item"> {{ item.id_lote }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="stock_actual">
+      <th mat-header-cell *matHeaderCellDef> Stock Actual </th>
+      <td mat-cell *matCellDef="let item"> {{ item.stock_actual }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="stock_minimo">
+      <th mat-header-cell *matHeaderCellDef> Stock Mínimo </th>
+      <td mat-cell *matCellDef="let item"> {{ item.stock_minimo }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="stock_maximo">
+      <th mat-header-cell *matHeaderCellDef> Stock Máximo </th>
+      <td mat-cell *matCellDef="let item"> {{ item.stock_maximo }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="ubicacion_especifica">
+      <th mat-header-cell *matHeaderCellDef> Ubicación </th>
+      <td mat-cell *matCellDef="let item"> {{ item.ubicacion_especifica }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="fecha_creacion">
+      <th mat-header-cell *matHeaderCellDef> Fecha Creación </th>
+      <td mat-cell *matCellDef="let item"> {{ item.fecha_creacion }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="acciones">
+      <th mat-header-cell *matHeaderCellDef> Acción </th>
+      <td mat-cell *matCellDef="let item">
+        <button mat-stroked-button color="primary" (click)="verReporte.emit(item)">
+          Ver Reporte de Lote
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>

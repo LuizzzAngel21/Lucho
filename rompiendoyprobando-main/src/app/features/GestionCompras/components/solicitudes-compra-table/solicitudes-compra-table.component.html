@@ -1,0 +1,55 @@
+<div class="table-container mat-elevation-z2">
+  <table mat-table [dataSource]="solicitudes || []" class="full-width">
+
+    <ng-container matColumnDef="idSolicitud">
+      <th mat-header-cell *matHeaderCellDef> ID Solicitud </th>
+      <td mat-cell *matCellDef="let element"> **{{element.idSolicitud}}** </td>
+    </ng-container>
+    
+    <ng-container matColumnDef="area">
+      <th mat-header-cell *matHeaderCellDef> Área </th>
+      <td mat-cell *matCellDef="let element"> {{element.area}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="solicitante">
+      <th mat-header-cell *matHeaderCellDef> Solicitante </th>
+      <td mat-cell *matCellDef="let element"> {{element.solicitante}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="fechaCreacion">
+      <th mat-header-cell *matHeaderCellDef> F. Creación </th>
+      <td mat-cell *matCellDef="let element"> 
+        {{element.fechaCreacion | date:'dd/MM/yyyy'}} 
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="estado">
+      <th mat-header-cell *matHeaderCellDef> Estado </th>
+      <td mat-cell *matCellDef="let element"> 
+        <span [class]="'estado-' + element.estado.toLowerCase().replace(' ', '-')">{{element.estado}}</span>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="motivo">
+      <th mat-header-cell *matHeaderCellDef> Motivo </th>
+      <td mat-cell *matCellDef="let element"> {{element.motivo}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="accion">
+      <th mat-header-cell *matHeaderCellDef> Acción </th>
+      <td mat-cell *matCellDef="let element">
+        <button color="primary" (click)="onCotizar(element)">
+          Cotizar
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <div *ngIf="!solicitudes?.length" class="no-data-message">
+    No hay solicitudes de compra pendientes.
+  </div>
+
+</div>

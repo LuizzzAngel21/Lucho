@@ -1,0 +1,32 @@
+.sub-item-link {
+    /* Estilos de Tipografía y Contenedor */
+    display: block; /* Hace que ocupe todo el ancho disponible */
+    text-decoration: none; /* Elimina el subrayado por defecto */
+    color: #333; /* Color de texto oscuro (puedes usar un color más claro si el fondo es oscuro) */
+    font-family: Arial, sans-serif; /* Fuente legible */
+    font-size: 1rem; /* Tamaño de fuente estándar */
+    padding: 8px 15px; /* Relleno superior/inferior y a los lados */
+    margin-bottom: 4px; /* Pequeño espacio debajo de cada elemento */
+    border-radius: 4px; /* Bordes ligeramente redondeados */
+    transition: background-color 0.2s, color 0.2s; /* Transición suave para el hover */
+}
+
+/* Estilo para el estado de "hover" (cuando el mouse pasa por encima) */
+.sub-item-link:hover {
+    background-color: #f0f0f0; /* Un fondo gris claro para resaltar */
+    color: #1e3a8a; /* Color primario para el texto al pasar el ratón */
+    cursor: pointer; /* Indica que es un elemento en el que se puede hacer clic */
+}
+
+/* Estilo para el estado "active" o "visited" (opcional) */
+.sub-item-link:active {
+    background-color: #e0e0e0; /* Un color un poco más oscuro al hacer clic */
+}
+
+/* Si usas la propiedad routerLink, es común darle un estilo diferente
+   al elemento que está actualmente activo (ejemplo con una clase .active) */
+.sub-item-link.active {
+    background-color: #007bff; /* Fondo con el color primario */
+    color: white; /* Texto blanco para contraste */
+    font-weight: bold; /* Hacer el texto en negrita */
+}

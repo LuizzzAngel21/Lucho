@@ -1,0 +1,33 @@
+<mat-toolbar color="warn">
+  <span class="dialog-title">{{ data.titulo }}</span>
+  <span class="spacer"></span>
+  <button (click)="onCancelar()">
+    Cerrar
+  </button>
+</mat-toolbar>
+
+<div mat-dialog-content class="dialog-content">
+  <div class="message-area">
+    <p>{{ data.mensaje }}</p>
+    <p><strong>Ítem:</strong> {{ data.itemNombre }}</p>
+    <p>¿Desea continuar con esta acción?</p>
+  </div>
+</div>
+
+<div mat-dialog-actions align="end">
+  <button 
+    mat-button 
+    type="button" 
+    (click)="onCancelar()" 
+    color="default"
+  >
+    Cancelar
+  </button>
+  <button 
+    mat-raised-button 
+    color="primary" 
+    (click)="onConfirmar()" 
+  >
+    Confirmar Entrega
+  </button>
+</div>

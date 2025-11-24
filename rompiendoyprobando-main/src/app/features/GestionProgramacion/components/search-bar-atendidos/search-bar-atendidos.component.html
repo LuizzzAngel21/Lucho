@@ -1,0 +1,17 @@
+<div class="search-bar">
+	<mat-form-field appearance="outline" class="term-field">
+		<mat-label>Buscar ID</mat-label>
+		<input matInput [value]="term" (input)="onTerm($event.target.value)" placeholder="OD001 / SC001" />
+		<button *ngIf="term" matSuffix mat-icon-button aria-label="Clear" (click)="clear()">
+			<mat-icon>close</mat-icon>
+		</button>
+	</mat-form-field>
+
+	<mat-form-field appearance="outline" class="mode-field">
+		<mat-label>Tipo</mat-label>
+		<mat-select [value]="modo" (selectionChange)="onModo($event.value)">
+			<mat-option value="DISTRIBUCION">DISTRIBUCION</mat-option>
+			<mat-option value="COMPRAS">COMPRAS</mat-option>
+		</mat-select>
+	</mat-form-field>
+</div>

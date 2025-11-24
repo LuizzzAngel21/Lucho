@@ -1,0 +1,41 @@
+/* --- 1. Contenedor Principal de la Barra Lateral --- */
+.sidebar-container {
+    /* Posicionamiento y Dimensiones */
+    width: 250px; /* Ancho fijo típico para una sidebar (ajusta según necesites) */
+    height: 100vh; /* Ocupa la altura completa de la ventana */
+    position: fixed; /* Fija la barra lateral para que no se mueva al hacer scroll */
+    top: 0;
+    left: 0;
+    
+    /* Estilos Visuales */
+    background-color: #ffffff; /* Fondo blanco o muy claro */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Sombra sutil a la derecha */
+    border-right: 1px solid #e0e0e0; /* Línea de separación opcional */
+    
+    /* Disposición del Contenido (Flexbox para el Header, Nav y Footer) */
+    display: flex;
+    flex-direction: column; /* Coloca los elementos verticalmente */
+    
+    /* Tipografía Base */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+}
+
+/* --- 2. Título de Sección --- */
+.sidebar-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase; /* Letras mayúsculas para la navegación */
+    color: #6c757d; /* Color gris suave para un título de sección */
+    padding: 20px 20px 10px 20px; /* Espaciado interno */
+    margin: 0; /* Elimina márgenes por defecto */
+    letter-spacing: 0.5px; /* Pequeño espacio entre letras */
+}
+
+/* --- 3. Contenedor de Navegación --- */
+.sidebar-nav {
+    /* El nav debe expandirse para ocupar el espacio restante entre el Header y el Footer */
+    flex-grow: 1; 
+    overflow-y: auto; /* Permite el scroll si hay muchos elementos de navegación */
+    padding: 0; /* Asegúrate de que no tenga padding extra */
+}

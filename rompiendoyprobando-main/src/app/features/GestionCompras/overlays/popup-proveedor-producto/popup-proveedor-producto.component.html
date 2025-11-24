@@ -1,0 +1,29 @@
+<mat-toolbar color="primary">
+  <span class="dialog-title">
+
+    Seleccionar Proveedor: Producto **{{productoId}} - {{productoNombre}}**
+  </span>
+  <span class="spacer"></span>
+  <button mat-icon-button (click)="onCancel()">
+
+  </button>
+</mat-toolbar>
+
+<div mat-dialog-content class="dialog-content">
+  <div *ngIf="isLoading" class="loading-spinner">
+    <mat-spinner diameter="30"></mat-spinner>
+    <p>Cargando proveedores disponibles...</p>
+  </div>
+  
+  <div *ngIf="!isLoading">
+    <app-proveedores-productos-table 
+      [proveedores]="proveedoresDisponibles"
+      (seleccionar)="onProveedorSeleccionado($event)"
+    ></app-proveedores-productos-table>
+  </div>
+  
+</div>
+
+<div mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()" color="warn">Cancelar</button>
+</div>

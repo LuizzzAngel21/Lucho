@@ -1,0 +1,63 @@
+<div class="search-despacho-container">
+    <mat-form-field appearance="outline" class="search-field">
+        <mat-label>Buscar por ID Inventario o ID Lote</mat-label>
+        <input matInput (input)="onInput($event.target.value)" [value]="term" />
+    </mat-form-field>
+    <div class="error" *ngIf="noResults">El codigo que ha ingresado es incorrecto o no existe</div>
+
+    <div class="productos-table" *ngIf="productos.length > 0">
+        <table mat-table [dataSource]="productos" class="mat-elevation-z2">
+            <ng-container matColumnDef="id_producto">
+                <th mat-header-cell *matHeaderCellDef> ID Producto </th>
+                <td mat-cell *matCellDef="let p"> {{ p.id_producto }} </td>
+            </ng-container>
+            <ng-container matColumnDef="nombre_producto">
+                <th mat-header-cell *matHeaderCellDef> Nombre </th>
+                <td mat-cell *matCellDef="let p"> {{ p.nombre_producto }} </td>
+            </ng-container>
+            <ng-container matColumnDef="descripcion_producto">
+                <th mat-header-cell *matHeaderCellDef> Descripción </th>
+                <td mat-cell *matCellDef="let p"> {{ p.descripcion_producto }} </td>
+            </ng-container>
+            <ng-container matColumnDef="codigo_digemid">
+                <th mat-header-cell *matHeaderCellDef> DIGEMID </th>
+                <td mat-cell *matCellDef="let p"> {{ p.codigo_digemid }} </td>
+            </ng-container>
+            <ng-container matColumnDef="registro_sanitario">
+                <th mat-header-cell *matHeaderCellDef> Reg. Sanitario </th>
+                <td mat-cell *matCellDef="let p"> {{ p.registro_sanitario }} </td>
+            </ng-container>
+            <ng-container matColumnDef="id_tipo">
+                <th mat-header-cell *matHeaderCellDef> Tipo </th>
+                <td mat-cell *matCellDef="let p"> {{ p.id_tipo }} </td>
+            </ng-container>
+            <ng-container matColumnDef="id_forma">
+                <th mat-header-cell *matHeaderCellDef> Forma </th>
+                <td mat-cell *matCellDef="let p"> {{ p.id_forma }} </td>
+            </ng-container>
+            <ng-container matColumnDef="condiciones_almacenamiento">
+                <th mat-header-cell *matHeaderCellDef> Alm. </th>
+                <td mat-cell *matCellDef="let p"> {{ p.condiciones_almacenamiento }} </td>
+            </ng-container>
+            <ng-container matColumnDef="condiciones_transporte">
+                <th mat-header-cell *matHeaderCellDef> Transp. </th>
+                <td mat-cell *matCellDef="let p"> {{ p.condiciones_transporte }} </td>
+            </ng-container>
+            <ng-container matColumnDef="estado">
+                <th mat-header-cell *matHeaderCellDef> Estado </th>
+                <td mat-cell *matCellDef="let p"> {{ p.estado }} </td>
+            </ng-container>
+            <ng-container matColumnDef="fecha_creacion">
+                <th mat-header-cell *matHeaderCellDef> Creación </th>
+                <td mat-cell *matCellDef="let p"> {{ p.fecha_creacion }} </td>
+            </ng-container>
+            <ng-container matColumnDef="fecha_actualizacion">
+                <th mat-header-cell *matHeaderCellDef> Actualización </th>
+                <td mat-cell *matCellDef="let p"> {{ p.fecha_actualizacion }} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </div>
+</div>

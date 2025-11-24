@@ -1,0 +1,47 @@
+<div class="page-container">
+    <h2>Reporte de Órdenes de Distribución Entregadas</h2>
+
+    <!-- CONTENEDOR PRINCIPAL DE LISTAS -->
+    <mat-card class="card-section">
+        <h3>Órdenes cuyo estado es 'Completada' y requieren revisión de incidencias.</h3>
+        
+        <!-- BARRA DE BÚSQUEDA -->
+        <div class="search-bar">
+            <h3>Buscar Orden Entregada</h3>
+            <input 
+                type="text" 
+                [(ngModel)]="filtroBusqueda" 
+                placeholder="Buscar por N° de Orden, Solicitante o Área"
+            >
+        </div>
+
+        <!-- TABLA DE DATOS -->
+        
+        
+    </mat-card>
+
+    <mat-card>
+        @if (isLoading) {
+            <!-- Estado de Carga -->
+            <div class="loading-state centered-content">
+                <mat-progress-spinner mode="indeterminate" diameter="50"></mat-progress-spinner>
+                <p>Cargando órdenes entregadas...</p>
+            </div>
+        } @else {
+            <!-- Conexión de la tabla con los datos filtrados y los eventos -->
+            @if (getOrdenesFiltradas() && getOrdenesFiltradas()!.length > 0) {
+                <app-reporte-ordenes-table
+                    [ordenes]="getOrdenesFiltradas()"
+                    (verDetalles)="onVerDetalles($event)"
+                    (verIncidencias)="onVerIncidencias($event)">
+                </app-reporte-ordenes-table>
+            } @else {
+                <!-- Estado Vacío -->
+                <div class="empty-state centered-content">
+                    <h2>No hay Órdenes Entregadas</h2>
+                    <p>Ninguna orden ha sido marcada como 'Completada' en el sistema.</p>
+                </div>
+            }
+        }
+    </mat-card>
+</div>

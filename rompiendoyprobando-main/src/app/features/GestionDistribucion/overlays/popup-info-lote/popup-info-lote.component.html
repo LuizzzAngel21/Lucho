@@ -1,0 +1,37 @@
+<mat-toolbar color="accent">
+  <span class="dialog-title">
+    Información Detallada del Lote N° {{ data.idLote }}
+  </span>
+  <span class="spacer"></span>
+  <button mat-button (click)="onClose()">
+    Cerrar
+  </button>
+</mat-toolbar>
+
+<div mat-dialog-content class="dialog-content">
+
+  <div *ngIf="isLoading" class="loading-state centered-content">
+    <mat-progress-spinner mode="indeterminate" diameter="30"></mat-progress-spinner>
+    <p>Cargando datos del lote...</p>
+  </div>
+
+  <div *ngIf="!isLoading && lote">
+    <!-- Lista de información como tarjeta simple -->
+    <mat-card class="info-card">
+      <p><strong>N° de Lote:</strong> {{ lote.numeroLote }}</p>
+      <p><strong>ID Producto:</strong> {{ lote.idProducto }}</p>
+      <p><strong>Estado:</strong> {{ lote.estado }}</p>
+      <mat-divider></mat-divider>
+      <p><strong>Cantidad Inicial:</strong> {{ lote.cantInicial }}</p>
+      <p><strong>Cantidad Actual:</strong> {{ lote.cantActual }}</p>
+      <mat-divider></mat-divider>
+      <p><strong>Fecha de Fabricación:</strong> {{ lote.fechaFabricacion | date:'dd/MM/yyyy' }}</p>
+      <p><strong>Fecha de Vencimiento:</strong> {{ lote.fechaVencimiento | date:'dd/MM/yyyy' }}</p>
+    </mat-card>
+  </div>
+  
+  <div *ngIf="!isLoading && !lote" class="empty-state centered-content">
+      <p>No se encontraron detalles para el lote especificado.</p>
+  </div>
+  
+</div>

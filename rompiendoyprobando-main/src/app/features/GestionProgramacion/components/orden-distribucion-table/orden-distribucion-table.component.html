@@ -1,0 +1,54 @@
+<div class="table-container">
+	<table mat-table [dataSource]="data" class="mat-elevation-z2">
+
+		<ng-container matColumnDef="id_orden_dist">
+			<th mat-header-cell *matHeaderCellDef> ID Orden </th>
+			<td mat-cell *matCellDef="let row"> {{ row.id_orden_dist }} </td>
+		</ng-container>
+
+		<ng-container matColumnDef="id_lote">
+			<th mat-header-cell *matHeaderCellDef> ID Lote </th>
+			<td mat-cell *matCellDef="let row"> {{ row.id_lote }} </td>
+		</ng-container>
+
+		<ng-container matColumnDef="id_producto">
+			<th mat-header-cell *matHeaderCellDef> ID Producto </th>
+			<td mat-cell *matCellDef="let row"> {{ row.id_producto }} </td>
+		</ng-container>
+
+		<ng-container matColumnDef="cantidad">
+			<th mat-header-cell *matHeaderCellDef> Cantidad </th>
+			<td mat-cell *matCellDef="let row"> {{ row.cantidad }} </td>
+		</ng-container>
+
+		<ng-container matColumnDef="condiciones_transporte">
+			<th mat-header-cell *matHeaderCellDef> Condiciones Transporte </th>
+			<td mat-cell *matCellDef="let row"> {{ row.condiciones_transporte || '-' }} </td>
+		</ng-container>
+
+		<ng-container matColumnDef="temperatura_requerida">
+			<th mat-header-cell *matHeaderCellDef> Temp. Req. </th>
+			<td mat-cell *matCellDef="let row"> {{ row.temperatura_requerida || '-' }} </td>
+		</ng-container>
+
+		<ng-container matColumnDef="observaciones">
+			<th mat-header-cell *matHeaderCellDef> Observaciones </th>
+			<td mat-cell *matCellDef="let row"> {{ row.observaciones || '-' }} </td>
+		</ng-container>
+
+		<ng-container matColumnDef="fecha_creacion">
+			<th mat-header-cell *matHeaderCellDef> Fecha Creación </th>
+			<td mat-cell *matCellDef="let row"> {{ row.fecha_creacion || '-' }} </td>
+		</ng-container>
+
+		<ng-container matColumnDef="acciones">
+			<th mat-header-cell *matHeaderCellDef> Acciones </th>
+			<td mat-cell *matCellDef="let row">
+				<button mat-button color="primary" (click)="onVerDetalle(row)">Ver detalle</button>
+			</td>
+		</ng-container>
+
+		<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+		<tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+	</table>
+</div>

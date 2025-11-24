@@ -1,0 +1,14 @@
+<div class="page-container">
+  <h2>Atender Requerimiento {{ reqIdActual }}</h2>
+  <app-detalle-requerimiento-atender-table
+    [data]="productos"
+    [(observaciones)]="observaciones"
+    (atender)="onAtender($event)"
+    (volver)="onVolver()"
+    (revisarStock)="onRevisarStock($event)"></app-detalle-requerimiento-atender-table>
+
+  <app-popup-revisar-stock-producto *ngIf="mostrarPopupStock"
+    [nombreProducto]="nombreProductoSeleccionado"
+    [lotes]="lotesProducto"
+    (close)="cerrarPopupStock()"></app-popup-revisar-stock-producto>
+</div>

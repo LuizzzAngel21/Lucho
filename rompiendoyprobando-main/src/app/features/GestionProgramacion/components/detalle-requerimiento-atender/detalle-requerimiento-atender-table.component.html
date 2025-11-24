@@ -1,0 +1,82 @@
+<div class="atender-container">
+  <table mat-table [dataSource]="data" class="mat-elevation-z2 atender-table">
+    <!-- Revisar -->
+    <ng-container matColumnDef="revisar">
+      <th mat-header-cell *matHeaderCellDef> Revisar </th>
+      <td mat-cell *matCellDef="let row">
+        <button mat-stroked-button color="primary" (click)="revisarStock.emit(row)">Revisar stock</button>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="id_producto">
+      <th mat-header-cell *matHeaderCellDef> ID Producto </th>
+      <td mat-cell *matCellDef="let row"> {{ row.id_producto }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="nombre_producto">
+      <th mat-header-cell *matHeaderCellDef> Nombre </th>
+      <td mat-cell *matCellDef="let row"> {{ row.nombre_producto }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="descripcion_producto">
+      <th mat-header-cell *matHeaderCellDef> Descripción </th>
+      <td mat-cell *matCellDef="let row"> {{ row.descripcion_producto }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="cantidadsolicitada">
+      <th mat-header-cell *matHeaderCellDef> Cant. Solicitada </th>
+      <td mat-cell *matCellDef="let row"> {{ row.cantidadsolicitada }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="codigo_digemid">
+      <th mat-header-cell *matHeaderCellDef> Código DIGEMID </th>
+      <td mat-cell *matCellDef="let row"> {{ row.codigo_digemid }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="registro_sanitario">
+      <th mat-header-cell *matHeaderCellDef> Registro Sanitario </th>
+      <td mat-cell *matCellDef="let row"> {{ row.registro_sanitario }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="id_tipo">
+      <th mat-header-cell *matHeaderCellDef> Tipo </th>
+      <td mat-cell *matCellDef="let row"> {{ row.id_tipo }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="id_forma">
+      <th mat-header-cell *matHeaderCellDef> Forma </th>
+      <td mat-cell *matCellDef="let row"> {{ row.id_forma }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="estado">
+      <th mat-header-cell *matHeaderCellDef> Estado </th>
+      <td mat-cell *matCellDef="let row"> {{ row.estado }} </td>
+    </ng-container>
+
+    <!-- Decision -->
+    <ng-container matColumnDef="decision">
+      <th mat-header-cell *matHeaderCellDef> Decision </th>
+      <td mat-cell *matCellDef="let row">
+        <mat-form-field appearance="outline" class="decision-field">
+          <mat-select [(ngModel)]="row.decision" (selectionChange)="onDecisionChange()" placeholder="Seleccione">
+            <mat-option value="COMPRAS">COMPRAS</mat-option>
+            <mat-option value="DISTRIBUCION">DISTRIBUCION</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+
+  <div class="observaciones">
+    <h3>Observaciones</h3>
+    <textarea matInput [(ngModel)]="observaciones" (ngModelChange)="observacionesChange.emit(observaciones)" rows="4" placeholder="Ingrese observaciones"></textarea>
+  </div>
+
+  <div class="acciones">
+    <button mat-stroked-button color="primary" (click)="volver.emit()">Volver</button>
+    <button mat-raised-button color="primary" [disabled]="!todasDecisionesTomadas()" (click)="emitirAtender()">Atender Requerimiento</button>
+  </div>
+</div>

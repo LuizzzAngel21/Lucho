@@ -1,0 +1,35 @@
+.search-digemid-container {
+  margin-top: 1rem;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+.search-row {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+.error {
+  color: #b00020;
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+}
+.ok {
+  color: #0a7d07;
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+}
+table.mini-table {
+  width: 100%;
+  margin-top: 0.75rem;
+}
+.cantidad-row {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  margin-top: 0.75rem;
+}
+textarea {
+  resize: none;
+  width: 6rem;
+}

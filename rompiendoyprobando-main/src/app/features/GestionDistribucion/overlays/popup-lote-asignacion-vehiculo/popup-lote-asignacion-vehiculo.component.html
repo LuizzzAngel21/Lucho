@@ -1,0 +1,53 @@
+<mat-toolbar color="primary">
+  <span class="dialog-title">
+    Asignar Vehículos a Orden N° {{ idOrden }}
+  </span>
+  <span class="spacer"></span>
+  <button (click)="onCancelar()" [disabled]="isSaving">
+  </button>
+</mat-toolbar>
+
+<div mat-dialog-content class="dialog-content">
+
+  <div *ngIf="isLoading" class="loading-state centered-content">
+    <mat-progress-spinner mode="indeterminate" diameter="30"></mat-progress-spinner>
+    <p>Cargando lotes y vehículos disponibles...</p>
+  </div>
+
+  <div *ngIf="!isLoading && detallesOrden && detallesOrden.length > 0">
+    <p class="text-sm mb-4">
+      Seleccione el vehículo adecuado para cada lote. El vehículo debe cumplir con la **condición de transporte requerida** (ej: Ambiente, Frío).
+    </p>
+
+
+    <app-asignacion-lote-vehiculo-table 
+      [detalles]="detallesOrden"
+      (asignacionCambio)="onAsignacionChange($event)">
+    </app-asignacion-lote-vehiculo-table>
+  </div>
+  
+  <!-- Estado de no datos -->
+  <div *ngIf="!isLoading && (!detallesOrden || detallesOrden.length === 0)" class="empty-state centered-content">
+      <mat-icon>info</mat-icon>
+      <p>Esta orden no tiene lotes pendientes de asignación de vehículo.</p>
+  </div>
+  
+</div>
+
+<div mat-dialog-actions align="end">
+  <button  
+    type="button" 
+    (click)="onCancelar()" 
+    [disabled]="isSaving"
+  >
+    Cancelar
+  </button>
+  
+  <button 
+    color="primary" 
+    (click)="onConfirmarAsignacion()" 
+    [disabled]="!isOrderFullyAssigned || isSaving"
+  >
+    <span *ngIf="!isSaving">Confirmar Asignación</span>
+  </button>
+</div>

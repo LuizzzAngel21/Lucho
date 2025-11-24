@@ -1,0 +1,10 @@
+<div class="observaciones-container">
+    <h3>Observaciones del Lote Recibido</h3>
+    <textarea class="textarea" [(ngModel)]="observaciones"
+        placeholder="Ingrese sus observaciones respecto a la recepción de este lote y su contenido"></textarea>
+    <div class="acciones">
+        <button mat-stroked-button color="warn" (click)="emitirConIncidencia()">Agregar incidencia y Registrar
+            lote</button>
+        <button mat-raised-button color="primary" (click)="emitirRegistrar()">Registrar lote</button>
+    </div>
+</div>

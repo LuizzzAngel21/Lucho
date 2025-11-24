@@ -1,0 +1,81 @@
+<div class="form-container" *ngIf="lote; else estadoCarga">
+    <h2>Registro de Lote</h2>
+    <div class="lote-producto-detalle">
+        <table mat-table [dataSource]="[lote]" class="mat-elevation-z2 detalle-lote-table">
+            <ng-container matColumnDef="id_lote">
+                <th mat-header-cell *matHeaderCellDef>ID Lote</th>
+                <td mat-cell *matCellDef="let item">{{ item.id_lote }}</td>
+            </ng-container>
+            <ng-container matColumnDef="id_producto">
+                <th mat-header-cell *matHeaderCellDef>ID Producto</th>
+                <td mat-cell *matCellDef="let item">{{ item.id_producto }}</td>
+            </ng-container>
+            <ng-container matColumnDef="id_orden_compra">
+                <th mat-header-cell *matHeaderCellDef>ID Orden Compra</th>
+                <td mat-cell *matCellDef="let item">{{ item.id_orden_compra }}</td>
+            </ng-container>
+            <ng-container matColumnDef="numero_lote">
+                <th mat-header-cell *matHeaderCellDef>Número Lote</th>
+                <td mat-cell *matCellDef="let item">{{ item.numero_lote }}</td>
+            </ng-container>
+            <ng-container matColumnDef="fecha_fabricacion">
+                <th mat-header-cell *matHeaderCellDef>Fecha Fabricación</th>
+                <td mat-cell *matCellDef="let item">{{ item.fecha_fabricacion }}</td>
+            </ng-container>
+            <ng-container matColumnDef="cantidad_inicial">
+                <th mat-header-cell *matHeaderCellDef>Cant. Inicial</th>
+                <td mat-cell *matCellDef="let item">{{ item.cantidad_inicial }}</td>
+            </ng-container>
+            <ng-container matColumnDef="cantidad_actual">
+                <th mat-header-cell *matHeaderCellDef>Cant. Actual</th>
+                <td mat-cell *matCellDef="let item">{{ item.cantidad_actual }}</td>
+            </ng-container>
+            <ng-container matColumnDef="estado">
+                <th mat-header-cell *matHeaderCellDef>Estado</th>
+                <td mat-cell *matCellDef="let item">{{ item.estado }}</td>
+            </ng-container>
+            <ng-container matColumnDef="ubicacion_almacen">
+                <th mat-header-cell *matHeaderCellDef>Ubicación</th>
+                <td mat-cell *matCellDef="let item">{{ item.ubicacion_almacen }}</td>
+            </ng-container>
+            <ng-container matColumnDef="temperatura_almacenamiento">
+                <th mat-header-cell *matHeaderCellDef>Temp. (°C)</th>
+                <td mat-cell *matCellDef="let item">{{ item.temperatura_almacenamiento ?? '—' }}</td>
+            </ng-container>
+            <ng-container matColumnDef="fecha_creacion">
+                <th mat-header-cell *matHeaderCellDef>Fecha Creación</th>
+                <td mat-cell *matCellDef="let item">{{ item.fecha_creacion }}</td>
+            </ng-container>
+            <ng-container matColumnDef="fecha_actualizacion">
+                <th mat-header-cell *matHeaderCellDef>Fecha Actualización</th>
+                <td mat-cell *matCellDef="let item">{{ item.fecha_actualizacion ?? '—' }}</td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+    </div>
+
+    <!-- Búsqueda de producto por código DIGEMID y agregado al lote -->
+    <app-search-info-digemid (agregarProducto)="handleAgregarProducto($event)"></app-search-info-digemid>
+
+    <!-- Tabla de productos que pertenecen al lote -->
+    <app-prod-pertenece-lote [items]="productosDelLote"
+        (eliminar)="handleEliminarProducto($event)"></app-prod-pertenece-lote>
+
+    <!-- Observaciones y acciones de registro -->
+    <app-observaciones-accion-registrar (registrarConIncidencia)="handleRegistrarConIncidencia($event)"
+        (registrarLote)="handleRegistrarLote($event)"></app-observaciones-accion-registrar>
+</div>
+
+<ng-template #estadoCarga>
+    <div class="loading">
+        <p *ngIf="!errorCarga">Cargando información del lote...</p>
+        <p *ngIf="errorCarga" class="error">{{ errorCarga }}</p>
+    </div>
+</ng-template>
+
+<!-- Popup para registrar incidencia desde el formulario de registro de lote -->
+<app-popup-registro-incidencia *ngIf="mostrarPopupIncidencia" (close)="cerrarPopupIncidencia()"
+    (registrarIncidencia)="handleRegistrarIncidencia($event)">
+</app-popup-registro-incidencia>

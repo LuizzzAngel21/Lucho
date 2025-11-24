@@ -1,0 +1,22 @@
+<div class="page-container">
+  <h2>Gestión de Almacenamiento</h2>
+
+  <mat-card class="card-section">
+    <h3>Lotes Recibidos</h3>
+    <app-lotes-recibidos-table [data]="lotesRecibidos" (registrarLote)="onRegistrarLote($event)">
+    </app-lotes-recibidos-table>
+  </mat-card>
+
+  <mat-divider></mat-divider>
+
+  <mat-card class="card-section">
+    <h3>Lotes Atendidos</h3>
+    <app-lotes-atendidos-table [data]="lotesAtendidos" (verReporte)="onVerReporte($event)">
+    </app-lotes-atendidos-table>
+  </mat-card>
+
+  <!-- Popup reporte de lote -->
+  <app-popup-reporte-lote *ngIf="reporteSeleccionado" [reporte]="reporteSeleccionado" (close)="cerrarPopup()"
+    (resolverIncidencia)="handleResolverIncidencia($event)">
+  </app-popup-reporte-lote>
+</div>

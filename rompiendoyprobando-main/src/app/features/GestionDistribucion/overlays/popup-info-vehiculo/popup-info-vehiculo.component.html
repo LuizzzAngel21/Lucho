@@ -1,0 +1,42 @@
+<mat-toolbar color="primary">
+  <span class="dialog-title">
+    Detalles del Vehículo N° {{ data.idVehiculo }}
+  </span>
+  <span class="spacer"></span>
+  <button mat-icon-button (click)="onClose()">
+    Cerrar
+  </button>
+</mat-toolbar>
+
+<div mat-dialog-content class="dialog-content">
+
+  <div *ngIf="!isLoading && vehiculo">
+    <!-- Lista de información como tarjeta simple -->
+    <mat-card class="info-card">
+        <h3>Información Principal</h3>
+        <p><strong>ID:</strong> #{{ vehiculo.idVehiculo }}</p>
+        <p><strong>Placa:</strong> {{ vehiculo.placa }}</p>
+        <p><strong>Disponibilidad:</strong> 
+          <span [class.text-green-600]="vehiculo.disponible" [class.text-red-600]="!vehiculo.disponible">
+            {{ vehiculo.disponible ? 'DISPONIBLE' : 'EN USO / NO DISPONIBLE' }}
+          </span>
+        </p>
+        
+        <mat-divider class="my-3"></mat-divider>
+
+        <h3>Detalles Técnicos</h3>
+        <p><strong>Tipo:</strong> {{ vehiculo.tipoVehiculo }}</p>
+        <p><strong>Capacidad:</strong> {{ vehiculo.capacidad }} Toneladas/M³</p>
+        <p><strong>Condición de Transporte:</strong> {{ vehiculo.condicionTransporte }}</p>
+    </mat-card>
+  </div>
+  
+  <div *ngIf="!isLoading && !vehiculo" class="empty-state centered-content">
+      <p>No se encontraron detalles para el vehículo especificado.</p>
+  </div>
+  
+</div>
+
+<div mat-dialog-actions align="end">
+  <button mat-raised-button (click)="onClose()" color="primary">Cerrar</button>
+</div>

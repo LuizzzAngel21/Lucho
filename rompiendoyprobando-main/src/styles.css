@@ -1,0 +1,8 @@
+/* Global placeholder styles to satisfy angular.json import */
+html, body {
+  margin: 0;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+}
+
+/* App-level helpers */
+.container { padding: 16px; }

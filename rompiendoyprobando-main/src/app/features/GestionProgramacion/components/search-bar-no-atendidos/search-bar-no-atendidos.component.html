@@ -1,0 +1,5 @@
+<div class="search-wrapper">
+  <label for="filterId" class="search-label">Filtrar por ID Requerimiento:</label>
+  <input id="filterId" type="text" [value]="term" (input)="onInput($event.target.value)" placeholder="Ej: REQ01" />
+  <button mat-stroked-button color="primary" (click)="clear()" *ngIf="term">Limpiar</button>
+</div>

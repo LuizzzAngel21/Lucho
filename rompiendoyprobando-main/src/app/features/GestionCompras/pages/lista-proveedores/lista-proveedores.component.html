@@ -1,0 +1,50 @@
+<div class="page-container">
+    <h2>Gestión de Proveedores</h2>
+
+    <!-- CONTENEDOR PRINCIPAL DE LISTAS -->
+    <mat-card class="card-section">
+        
+        <!-- HEADER / BOTÓN DE CREACIÓN -->
+        <div class="header-actions">
+             <h3>Listado de Proveedores Registrados</h3>
+             <button mat-raised-button color="primary" (click)="onCrearProveedor()">
+                Registrar Nuevo Proveedor
+            </button>
+        </div>
+        
+        <!-- BARRA DE BÚSQUEDA -->
+        <div class="search-bar">
+            <h3>Buscar Proveedor</h3>
+            <input 
+                type="text" 
+                [(ngModel)]="filtroBusqueda" 
+                placeholder="Buscar por Nombre o RUC"
+            >
+        </div>
+
+        <!-- TABLA DE DATOS -->
+        
+        @if (isLoading) {
+            <!-- Estado de Carga -->
+            <div class="loading-state centered-content">
+                <mat-progress-spinner mode="indeterminate" diameter="50"></mat-progress-spinner>
+                <p>Cargando listado de proveedores...</p>
+            </div>
+        } @else {
+            <!-- Conexión de la tabla con los datos filtrados y los eventos de CRUD -->
+            @if (getProveedoresFiltrados() && getProveedoresFiltrados()!.length > 0) {
+                <app-proveedores-table
+                    [proveedores]="getProveedoresFiltrados()"
+                    (editar)="onEditarProveedor($event)"
+                    (eliminar)="onEliminarProveedor($event)">
+                </app-proveedores-table>
+            } @else {
+                <!-- Estado Vacío -->
+                <div class="empty-state centered-content">
+                    <h2>No se encontraron Proveedores</h2>
+                    <p>Ajuste los criterios de búsqueda o use el botón superior para registrar uno nuevo.</p>
+                </div>
+            }
+        }
+    </mat-card>
+</div>

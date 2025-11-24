@@ -1,0 +1,77 @@
+<div class="table-container mat-elevation-z2">
+  <table mat-table [dataSource]="ordenes || []" class="full-width">
+
+    <!-- ID Orden Column -->
+    <ng-container matColumnDef="idOrden">
+      <th mat-header-cell *matHeaderCellDef> OC N° </th>
+      <td mat-cell *matCellDef="let element"> **{{element.idOrden}}** </td>
+    </ng-container>
+
+    <!-- ID Requerimiento Column -->
+    <ng-container matColumnDef="idRequerimiento">
+      <th mat-header-cell *matHeaderCellDef> Req. N° </th>
+      <td mat-cell *matCellDef="let element"> {{element.idRequerimiento}} </td>
+    </ng-container>
+    
+    <!-- Nombre Usuario Column -->
+    <ng-container matColumnDef="nombreUsuario">
+      <th mat-header-cell *matHeaderCellDef> Solicitante </th>
+      <td mat-cell *matCellDef="let element"> {{element.nombreUsuario}} </td>
+    </ng-container>
+
+    <!-- Área Column -->
+    <ng-container matColumnDef="area">
+      <th mat-header-cell *matHeaderCellDef> Área </th>
+      <td mat-cell *matCellDef="let element"> {{element.area}} </td>
+    </ng-container>
+
+    <!-- Estado Column -->
+    <ng-container matColumnDef="estado">
+      <th mat-header-cell *matHeaderCellDef> Estado </th>
+      <td mat-cell *matCellDef="let element"> {{element.estado}} </td>
+    </ng-container>
+    
+    <!-- Prioridad Column -->
+    <ng-container matColumnDef="prioridad">
+      <th mat-header-cell *matHeaderCellDef> Prioridad </th>
+      <td mat-cell *matCellDef="let element"> {{element.prioridad}} </td>
+    </ng-container>
+    
+    <!-- Fecha Entrega Estimada Column -->
+    <ng-container matColumnDef="fechaEntregaEstimada">
+      <th mat-header-cell *matHeaderCellDef> Entrega Est. </th>
+      <td mat-cell *matCellDef="let element"> 
+        {{element.fechaEntregaEstimada | date:'dd/MM/yyyy'}} 
+      </td>
+    </ng-container>
+
+    <!-- Acción Column (Designar Movilidad) -->
+    <ng-container matColumnDef="designarMovilidad">
+      <th mat-header-cell *matHeaderCellDef> Designar Movilidad </th>
+      <td mat-cell *matCellDef="let element">
+        <button 
+          color="accent" 
+          [disabled]="element.estado !== 'Pendiente'"
+          (click)="onDesignarMovilidad(element.idOrden)"
+        >
+          Designar Movilidad
+        </button>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="cancelarOrden">
+      <th mat-header-cell *matHeaderCellDef> Cancelar Orden </th>
+      <td mat-cell *matCellDef="let element">
+        <button
+          color="accent" 
+          (click)="onCancelarOrden(element.idOrden)"
+          >
+          Cancelar Orden
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>

@@ -1,0 +1,14 @@
+<div class="sidebar-container">
+
+    <app-sidebar-header />
+
+    <h2 class="sidebar-title">Navegacion</h2>
+
+    <nav class="sidebar-nav">
+        @for (module of navItems; track module.displayName) {
+            <app-sidebar-item [module] = "module" />
+        }
+    </nav>
+        
+    <app-sidebar-footer></app-sidebar-footer>
+</div>

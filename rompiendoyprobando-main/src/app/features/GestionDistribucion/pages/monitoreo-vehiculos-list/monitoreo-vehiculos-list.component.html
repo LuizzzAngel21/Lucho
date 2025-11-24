@@ -1,0 +1,45 @@
+<div class="page-container">
+    <h2>Monitoreo de Vehículos en Ruta</h2>
+
+    <!-- CONTENEDOR PRINCIPAL DE LISTAS -->
+    <mat-card class="card-section">
+        <h3>Seguimiento en tiempo real de las órdenes en tránsito.</h3>
+        
+        <!-- BARRA DE BÚSQUEDA -->
+        <div class="search-bar">
+            <h3>Buscar Seguimiento</h3>
+            <input 
+                type="text" 
+                [(ngModel)]="filtroBusqueda" 
+                placeholder="Buscar por Seg. N°, Placa o Destino"
+            >
+        </div>
+
+        <!-- TABLA DE DATOS -->
+        
+        @if (isLoading) {
+            <!-- Estado de Carga -->
+            <div class="loading-state centered-content">
+                <mat-progress-spinner mode="indeterminate" diameter="50"></mat-progress-spinner>
+                <p>Cargando vehículos en ruta...</p>
+            </div>
+        } @else {
+            <!-- Conexión de la tabla con los datos filtrados y los eventos de acción -->
+            @if (getSeguimientosFiltrados() && getSeguimientosFiltrados()!.length > 0) {
+                <app-monitoreo-vehiculos-table
+                    [seguimientos]="getSeguimientosFiltrados()"
+                    (verLotes)="onVerLotes($event)"
+                    (verInfoVehiculo)="onVerInfoVehiculo($event)"
+                    (confirmarEntrega)="onConfirmarEntrega($event)"
+                    (registrarIncidencia)="onRegistrarIncidencia($event)">
+                </app-monitoreo-vehiculos-table>
+            } @else {
+                <!-- Estado Vacío -->
+                <div class="empty-state centered-content">
+                    <h2>No hay Vehículos en Ruta</h2>
+                    <p>Actualmente, no hay órdenes de distribución activas o en tránsito.</p>
+                </div>
+            }
+        }
+    </mat-card>
+</div>

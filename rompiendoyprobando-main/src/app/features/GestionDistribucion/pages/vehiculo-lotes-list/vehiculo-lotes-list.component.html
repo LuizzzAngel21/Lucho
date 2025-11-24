@@ -1,0 +1,43 @@
+<div class="page-container">
+    <h2>Lotes en Tránsito (Seguimiento N° {{ idSeguimiento }})</h2>
+
+    <!-- CONTENEDOR DE DETALLE DEL ENCABEZADO -->
+    <mat-card class="card-section header-details">
+        <h3>Detalles del Transporte</h3>
+        <p><strong>Vehículo:</strong> {{ infoSeguimiento.placa }}</p>
+        <p><strong>Próximo Destino:</strong> {{ infoSeguimiento.destino }}</p>
+    </mat-card>
+
+    <!-- CONTENEDOR DE LA TABLA DE LOTES -->
+    <mat-card class="card-section table-container">
+        <h3>Lotes Transportados</h3>
+        
+        @if (isLoading) {
+            <!-- Estado de Carga -->
+            <div class="loading-state centered-content">
+                <mat-progress-spinner mode="indeterminate" diameter="50"></mat-progress-spinner>
+                <p>Cargando lotes...</p>
+            </div>
+        } @else {
+            <!-- Conexión de la tabla con los detalles del transporte -->
+            @if (detallesTransporte && detallesTransporte.length > 0) {
+                <app-vehiculo-lotes-table
+                    [detalles]="detallesTransporte"
+                    (verInfoLote)="onVerInfoLote($event)">
+                </app-vehiculo-lotes-table>
+            } @else {
+                <!-- Estado Vacío -->
+                <div class="empty-state centered-content">
+                    <h2>No hay Lotes Asignados</h2>
+                    <p>Este seguimiento no tiene lotes registrados para el transporte.</p>
+                </div>
+            }
+        }
+    </mat-card>
+    
+    <div class="footer-actions">
+        <button mat-button [routerLink]="['/GestionDistribucion/monitoreo']">
+            Volver a Monitoreo de Vehículos
+        </button>
+    </div>
+</div>

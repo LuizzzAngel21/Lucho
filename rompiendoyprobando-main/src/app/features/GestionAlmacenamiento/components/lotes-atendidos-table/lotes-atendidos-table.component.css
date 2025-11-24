@@ -1,0 +1,18 @@
+.table-container {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+table {
+  width: 100%;
+}
+
+th {
+  background-color: #e0f0ff;
+  color: #1e3a8a;
+  font-weight: bold;
+}
+
+button {
+  color: #1e3a8a;
+}

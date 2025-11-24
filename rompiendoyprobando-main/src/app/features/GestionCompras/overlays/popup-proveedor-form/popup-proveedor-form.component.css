@@ -1,0 +1,118 @@
+/* ------------------------------------------------------------------- */
+/* Estilos Base del Contenedor y Títulos (Simulando .popup-container) */
+/* ------------------------------------------------------------------- */
+
+/* Estilos para el título del diálogo (mat-toolbar) */
+.mat-toolbar {
+    background-color: #20407b !important; /* Azul oscuro corporativo */
+    color: #ffffff;
+    padding: 0 24px;
+    height: 64px;
+}
+
+.dialog-title {
+    font-weight: 600;
+    font-size: 1.25rem;
+}
+
+/* Estilos para el contenido del formulario */
+.form-content {
+    padding: 24px 24px 16px 24px;
+    display: grid;
+    gap: 8px; 
+}
+
+/* Nuevo contenedor para agrupar Título y Campo */
+.form-field-group {
+    /* Mantiene los grupos sin margin adicional */
+    margin: 0; 
+}
+
+/* Estilo para los títulos (H4) que actúan como labels */
+.form-field-group h4 {
+    color: #1f3b73; /* Color de texto del form */
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 4px; /* Pegar el título al campo */
+    margin-top: 0;
+}
+
+
+/* ------------------------------------------------------------------- */
+/* Estilos de Campos de Formulario (Simulando textarea, select) */
+/* ------------------------------------------------------------------- */
+
+/* Aseguramos que los mat-form-field ocupen todo el ancho y apliquen tus colores */
+.full-width {
+    width: 100%;
+    /* Eliminamos el espacio vertical que Material a veces añade */
+    margin: 0 !important; 
+    padding-top: 0 !important; 
+}
+
+/* Personalización del input de Material para que se vea como tus estilos */
+.mat-mdc-form-field-subscript-wrapper {
+    /* Ajuste para que los mensajes de error no rompan el layout */
+    padding: 0;
+}
+
+/* Sobrescribir el estilo del input para coincidir con tu diseño */
+.mat-mdc-text-field-wrapper {
+    background-color: #f5f8ff !important; /* Fondo claro de input */
+    border-radius: 5px;
+}
+
+.mat-mdc-text-field-wrapper .mat-mdc-form-field-flex {
+    border: 1px solid #a0b5da; /* Borde del input */
+    border-radius: 5px;
+    padding: 0 10px;
+}
+
+.mat-mdc-input-element {
+    color: #1f3b73; /* Color de texto del input */
+    font-size: 14px;
+}
+
+/* ------------------------------------------------------------------- */
+/* Estilos de Checkbox de Estado */
+/* ------------------------------------------------------------------- */
+
+.status-checkbox {
+    margin-top: 10px;
+    color: #1f3b73;
+}
+
+/* ------------------------------------------------------------------- */
+/* Estilos de Botones (Simulando .button-group) */
+/* ------------------------------------------------------------------- */
+
+.mat-mdc-dialog-actions {
+    padding: 16px 24px;
+    /* justify-content: flex-end; ya es el valor por defecto de align="end" */
+    gap: 10px;
+}
+
+.mat-mdc-button, .mat-mdc-raised-button {
+    /* Base Button */
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-weight: 500;
+}
+
+/* Botón Cancelar (Simulando .cancel-btn) */
+.mat-mdc-button[color="basic"] {
+    background-color: #cccccc !important;
+    color: #333 !important;
+}
+
+/* Botón Registrar/Guardar (Simulando .register-btn) */
+.mat-mdc-raised-button[color="primary"] {
+    background-color: #1f64ff !important; /* Azul Primario */
+    color: #ffffff !important;
+}
+
+/* Estilo para el spinner cuando está cargando */
+mat-spinner {
+    margin: 0 4px;
+}

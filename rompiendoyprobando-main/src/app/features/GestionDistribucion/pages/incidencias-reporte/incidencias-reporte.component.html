@@ -1,0 +1,26 @@
+<div class="page-container">
+    <button (click)="goBack()" color="primary" class="back-button">
+        Volver a Reportes de Entrega
+    </button>
+    
+    <h2>Incidencias Reportadas para Orden de Distribución N° **{{ idOrden }}**</h2>
+
+    <mat-card class="card-section">
+        
+            @if (incidencias && incidencias.length > 0) {
+                <app-reporte-incidencias-table 
+                [incidencias]="incidencias">
+
+                </app-reporte-incidencias-table>
+
+                
+            } @else {
+                <!-- Estado Vacío -->
+                <div class="empty-state centered-content">
+                    <h3 class="mt-2">Sin Incidencias Registradas</h3>
+                    <p>La Orden N° {{ idOrden }} fue entregada sin ningún reporte de novedad o problema.</p>
+                </div>
+            }
+    </mat-card>
+
+</div>

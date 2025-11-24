@@ -1,0 +1,63 @@
+/* ------------------------------------------------------------------- */
+/* Encabezado (mat-toolbar color="warn") */
+/* ------------------------------------------------------------------- */
+
+.mat-toolbar {
+    /* Color de advertencia: Naranja/Rojo suave para la alerta */
+    background-color: #d9534f !important; 
+    color: #ffffff;
+    padding: 0 20px;
+    min-height: 56px;
+    /* Aseguramos que el botón de cerrar sea solo un ícono */
+}
+
+.dialog-title {
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+/* ------------------------------------------------------------------- */
+/* Contenido del Mensaje (mat-dialog-content) */
+/* ------------------------------------------------------------------- */
+
+.dialog-content {
+    padding: 24px 30px;
+    color: #333;
+    font-size: 1rem;
+}
+
+.message-area p {
+    margin-bottom: 10px;
+    line-height: 1.4;
+}
+
+.message-area strong {
+    color: #1f3b73; /* Azul oscuro corporativo para destacar el ítem */
+    font-weight: 700;
+}
+
+/* ------------------------------------------------------------------- */
+/* Acciones y Botones (mat-dialog-actions) */
+/* ------------------------------------------------------------------- */
+
+.mat-dialog-actions {
+    padding: 16px 24px;
+    gap: 10px;
+    /* Los estilos de los botones se basan en los que definiste para los otros overlays */
+}
+
+/* Botón Cancelar (mat-button color="primary") */
+.mat-button[color="primary"] {
+    /* Usamos el color de tu dis    eño (o una versión más clara) */
+    background-color: #f0f0f0 !important;
+    color: #1f3b73 !important; 
+    border: 1px solid #ccc;
+    font-weight: 500;
+}
+
+/* Botón Confirmar Eliminación (mat-raised-button color="warn") */
+.mat-raised-button[color="warn"] {
+    background-color: #d9534f !important; /* Rojo fuerte para la acción destructiva */
+    color: #ffffff !important;
+    font-weight: 600;
+}

@@ -1,0 +1,6 @@
+.popup-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.4); display:flex; justify-content:center; align-items:flex-start; padding-top:3rem; z-index:1000; }
+.popup-container { background:#fff; padding:1.25rem 1.5rem; border-radius:8px; width:100%; max-width:900px; }
+h3 { margin-top:0; margin-bottom:1rem; color:#1e3a8a; }
+.stock-table { width:100%; margin-bottom:1rem; }
+th { font-weight:600; }
+.acciones { text-align:right; }

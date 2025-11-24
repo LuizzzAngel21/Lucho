@@ -1,0 +1,23 @@
+/* El componente app-sidebar-header debe estar dentro del sidebar-container */
+app-sidebar-header {
+    /* Es mejor usar display: block o flexbox dentro del componente real */
+    display: block; 
+}
+
+.sidebar-header-content {
+    padding: 10px; /* Relleno generoso */
+    text-align: center;
+    border-bottom: 1px solid #e0e0e0; /* Separador visual */
+    background-color: #f8f9fa; /* Fondo ligeramente diferente para el encabezado */
+    
+    /* Estilos de ejemplo si contuviera un logo o título */
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #007bff; /* Color primario de tu aplicación */
+}
+
+.sidebar-header-logo {
+    width: 250px; /* Ajusta según el tamaño del logo */
+    height: auto;
+    margin-bottom: 0px; /* Espacio debajo del logo */
+}

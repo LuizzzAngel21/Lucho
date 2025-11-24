@@ -1,0 +1,15 @@
+.search-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 12px;
+}
+
+.search-field {
+  width: 280px;
+}
+
+.no-matches {
+  font-size: 0.85rem;
+  color: #b00020;
+}

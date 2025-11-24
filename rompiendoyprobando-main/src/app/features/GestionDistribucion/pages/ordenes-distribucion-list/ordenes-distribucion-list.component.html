@@ -1,0 +1,36 @@
+<div class="page-container">
+    <h2>Lista de Órdenes de Distribución</h2>
+
+    <!-- CONTENEDOR PRINCIPAL DE LISTAS -->
+    <mat-card class="card-section">
+        <h3>Órdenes pendientes y en proceso de distribución.</h3>
+        
+        <!-- BARRA DE BÚSQUEDA -->
+        <div class="search-bar">
+            <h3>Buscar Orden</h3>
+            <input 
+                type="text" 
+                [(ngModel)]="filtroBusqueda" 
+                placeholder="Buscar por N° de Orden, Solicitante o Área"
+            >
+        </div>
+
+        <!-- TABLA DE DATOS -->
+        
+        @if (getOrdenesFiltradas() && getOrdenesFiltradas()!.length > 0) {
+                <app-ordenes-distribucion-table
+                    [ordenes]="getOrdenesFiltradas()"
+                    (designarMovilidad)="onDesignarMovilidad($event)"
+                    (cancelarOrden)="onCancelarOrden($event)">
+                </app-ordenes-distribucion-table>
+            } @else {
+                <!-- Estado Vacío -->
+                <div class="empty-state centered-content">
+                    <h2>No hay Órdenes Pendientes</h2>
+                    <p>No se encontraron órdenes de distribución que requieran asignación de vehículos.</p>
+                </div>
+            }
+    </mat-card>
+    
+    <!-- NOTA: No se requiere footer-actions en esta página. -->
+</div>

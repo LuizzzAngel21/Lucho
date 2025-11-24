@@ -1,0 +1,5 @@
+.atender-container { padding: 1rem; }
+.atender-table { width: 100%; margin-bottom: 1.5rem; }
+.decision-field { width: 160px; }
+.observaciones textarea { width: 100%; resize: vertical; }
+.acciones { display: flex; justify-content: space-between; margin-top: 1rem; }

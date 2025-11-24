@@ -1,0 +1,20 @@
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+}
+
+.page-container {
+  padding: 1.5rem;
+  color: #1e3a8a; /* Azul oscuro */
+}
+
+.card-section {
+  margin-bottom: 2rem;
+  background-color: #f8f9fc; /* Fondo claro */
+}
+
+h2, h3 {
+  color: #1e3a8a;
+  margin-bottom: 1rem;
+}

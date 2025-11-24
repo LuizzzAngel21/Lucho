@@ -1,0 +1,54 @@
+<div class="page-container">
+    <button (click)="goBack()" color="primary" class="back-button">
+        Volver a Reportes de Entrega
+    </button>
+    
+    <h2>Detalle Completo de Orden N° **{{ idOrden }}**</h2>
+
+    @if (errorCarga) {
+        <!-- Estado de Error -->
+        <div class="error-state centered-content">
+            <h3>Error de Carga</h3>
+            <p>{{ errorCarga }}</p>
+        </div>
+    } @else if (detalleCompleto) {
+        <div class="report-content-grid">
+            
+            <!-- 1. INFORMACIÓN PRINCIPAL Y SEGUIMIENTO -->
+            <mat-card class="card-section info-card">
+                <h3>Resumen de la Orden</h3>
+                <p><strong>Solicitante:</strong> {{ detalleCompleto.orden.nombreUsuario }}</p>
+                <p><strong>Área Destino:</strong> {{ detalleCompleto.orden.area }}</p>
+                <p><strong>Fecha Entrega:</strong> {{ detalleCompleto.orden.fechaEntregaEstimada | date:'dd/MM/yyyy' }}</p>
+                <p><strong>Estado Final:</strong> <span class="font-bold text-green-600">{{ detalleCompleto.orden.estado }}</span></p>
+            </mat-card>
+            
+            <mat-card class="card-section info-card">
+                <h3>Detalles de Transporte</h3>
+                <p><strong>Vehículo ID:</strong> #{{ detalleCompleto.infoSeguimiento.idVehiculo }} ({{ detalleCompleto.infoSeguimiento.placaVehiculo }})</p>
+                <p><strong>Destino Final:</strong> {{ detalleCompleto.infoSeguimiento.proximoDestino }}</p>
+                <p><strong>Ubicación Cierre:</strong> {{ detalleCompleto.infoSeguimiento.ubicacionActual }}</p>
+                <p><strong>Fecha Cierre:</strong> {{ detalleCompleto.infoSeguimiento.fechaHoraActualizacion | date:'dd/MM/yyyy HH:mm' }}</p>
+            </mat-card>
+
+            <!-- 2. TABLA DE LOTES TRANSPORTADOS -->
+            <mat-card class="card-section table-card full-width">
+                <h3>Lotes Transportados ({{ detalleCompleto.detallesLotes.length }} ítems)</h3>
+                <app-reporte-detalle-lotes-table [detalles]="detalleCompleto.detallesLotes"></app-reporte-detalle-lotes-table>
+            </mat-card>
+            
+            <!-- 3. JUSTIFICACIÓN DE CIERRE -->
+            <mat-card class="card-section full-width">
+                <h3>Notas y Justificación de Cierre</h3>
+                <p class="text-gray-700 whitespace-pre-wrap">{{ detalleCompleto.justificacionCierre || 'No se registraron notas de cierre para esta entrega.' }}</p>
+            </mat-card>
+            
+        </div>
+    } @else {
+        <!-- Estado Vacío -->
+        <div class="empty-state centered-content">
+            <h3 class="mt-2">Reporte no Disponible</h3>
+            <p>No se encontraron datos completos para la Orden N° {{ idOrden }}.</p>
+        </div>
+    }
+</div>

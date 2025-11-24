@@ -1,0 +1,111 @@
+<div class="table-container mat-elevation-z2">
+  <table mat-table [dataSource]="seguimientos || []" class="full-width">
+
+    <!-- ID Seguimiento Column -->
+    <ng-container matColumnDef="idSeguimiento">
+      <th mat-header-cell *matHeaderCellDef> Seg. N° </th>
+      <td mat-cell *matCellDef="let element"> {{element.idSeguimiento}} </td>
+    </ng-container>
+
+    <!-- ID Orden Column -->
+    <ng-container matColumnDef="idOrden">
+      <th mat-header-cell *matHeaderCellDef> Orden N° </th>
+      <td mat-cell *matCellDef="let element"> {{element.idOrden}} </td>
+    </ng-container>
+    
+    <!-- ID Vehiculo Column -->
+    <ng-container matColumnDef="idVehiculo">
+      <th mat-header-cell *matHeaderCellDef> Vehículo </th>
+      <td mat-cell *matCellDef="let element"> **#{{element.idVehiculo}} ({{element.placaVehiculo}})** </td>
+    </ng-container>
+
+    <!-- Estado Actual Column -->
+    <ng-container matColumnDef="estadoActual">
+      <th mat-header-cell *matHeaderCellDef> Estado Actual </th>
+      <td mat-cell *matCellDef="let element"> {{element.estadoActual}} </td>
+    </ng-container>
+    
+    <!-- Ubicación Actual Column -->
+    <ng-container matColumnDef="ubicacionActual">
+      <th mat-header-cell *matHeaderCellDef> Ubicación </th>
+      <td mat-cell *matCellDef="let element"> {{element.ubicacionActual}} </td>
+    </ng-container>
+
+    <!-- Fecha Hora Actualizacion Column -->
+    <ng-container matColumnDef="fechaHoraActualizacion">
+      <th mat-header-cell *matHeaderCellDef> Última Act. </th>
+      <td mat-cell *matCellDef="let element"> 
+        {{element.fechaHoraActualizacion | date:'dd/MM HH:mm'}} 
+      </td>
+    </ng-container>
+
+    <!-- Próximo Destino Column -->
+    <ng-container matColumnDef="proximoDestino">
+      <th mat-header-cell *matHeaderCellDef> Próximo Destino </th>
+      <td mat-cell *matCellDef="let element"> {{element.proximoDestino}} </td>
+    </ng-container>
+    
+    <!-- Estimado Llegada Column -->
+    <ng-container matColumnDef="estimadoLlegada">
+      <th mat-header-cell *matHeaderCellDef> Estimado Llegada </th>
+      <td mat-cell *matCellDef="let element"> 
+        {{element.estimadoLlegada | date:'dd/MM HH:mm'}} 
+      </td>
+    </ng-container>
+
+    <!-- Acción 1: Ver Lotes -->
+    <ng-container matColumnDef="verLotes">
+      <th mat-header-cell *matHeaderCellDef> Lotes </th>
+      <td mat-cell *matCellDef="let element">
+        <button 
+          color="primary" 
+          (click)="onVerLotes(element.idSeguimiento)"
+        >
+          Ver Lotes
+        </button>
+      </td>
+    </ng-container>
+    
+    <!-- Acción 2: Info Vehículo -->
+    <ng-container matColumnDef="infoVehiculo">
+      <th mat-header-cell *matHeaderCellDef> Info Vehículo </th>
+      <td mat-cell *matCellDef="let element">
+        <button 
+          color="default" 
+          (click)="onVerInfoVehiculo(element.idVehiculo)"
+        >
+          Info
+        </button>
+      </td>
+    </ng-container>
+
+    <!-- Acción 3: ConfirmarEntrega -->
+    <ng-container matColumnDef="confirmarEntrega">
+      <th mat-header-cell *matHeaderCellDef> Entrega </th>
+      <td mat-cell *matCellDef="let element">
+        <button 
+          color="default" 
+          (click)="onConfirmarEntrega(element.idOrden)"
+        >
+          ConfirmarEntrega
+        </button>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="registrarIncidencia">
+      <th mat-header-cell *matHeaderCellDef> Incidencia </th>
+      <td mat-cell *matCellDef="let element">
+        <button 
+          color="accent" 
+          [disabled]="element.estadoActual !== 'En Ruta'"
+          (click)="onRegistrarIncidencia(element)"
+        >
+          Registrar
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>

@@ -1,0 +1,43 @@
+<div class="popup-overlay" *ngIf="reporte">
+    <div class="popup-container">
+        <h3>Detalle de Movimiento de Inventario</h3>
+
+        <div class="info-section">
+            <p><strong>ID Movimiento:</strong> {{ reporte.id_movimiento }}</p>
+            <p><strong>ID Inventario:</strong> {{ reporte.id_inventario }}</p>
+            <p><strong>Tipo Movimiento:</strong> {{ reporte.tipo_movimiento }}</p>
+            <p><strong>Fecha Movimiento:</strong> {{ reporte.fecha_movimiento }}</p>
+        </div>
+
+        <h4>Detalles Adicionales</h4>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Cantidad</th>
+                        <th>Usuario Registro</th>
+                        <th>Referencia (ID)</th>
+                        <th>Tipo Referencia</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{ reporte.cantidad }}</td>
+                        <td>{{ reporte.id_usuario_registro }}</td>
+                        <td>{{ reporte.id_referencia }}</td>
+                        <td>{{ reporte.tipo_referencia }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="observacion-section" *ngIf="reporte.observacion">
+            <h4>Observación</h4>
+            <p>{{ reporte.observacion }}</p>
+        </div>
+
+        <div class="button-group">
+            <button class="back-btn" (click)="volver()">Volver</button>
+        </div>
+    </div>
+</div>

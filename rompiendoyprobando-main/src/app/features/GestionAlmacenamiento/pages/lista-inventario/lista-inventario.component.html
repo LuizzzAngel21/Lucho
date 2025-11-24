@@ -1,0 +1,18 @@
+<div class="page-container">
+    <h2>Ver Inventario</h2>
+
+    <app-search-bar (termChange)="onSearchTerm($event)" [noMatches]="noMatches"></app-search-bar>
+
+    <mat-card class="card-section">
+        <h3>Inventario Registrado</h3>
+        <app-lista-inventario-table [data]="inventarioFiltrado" (selectedChange)="onSelectionChange($event)"
+            (verReporte)="verReporteLote($event)"></app-lista-inventario-table>
+        <div class="acciones-inventario">
+            <button mat-raised-button color="primary" (click)="registrarSalida()">
+                Registrar salida
+            </button>
+        </div>
+    </mat-card>
+
+    <!-- Espacio para futuros popups de detalle/movimiento -->
+</div>

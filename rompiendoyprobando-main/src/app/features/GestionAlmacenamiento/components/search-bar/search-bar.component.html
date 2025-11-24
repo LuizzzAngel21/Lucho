@@ -1,0 +1,12 @@
+<div class="search-bar">
+    <mat-form-field appearance="outline" class="search-field">
+        <mat-label>{{ placeholder }}</mat-label>
+        <input matInput (input)="onInput($event.target.value)" [value]="term" />
+        <button *ngIf="term" matSuffix mat-icon-button aria-label="Clear" (click)="onInput('')">
+            <mat-icon>close</mat-icon>
+        </button>
+    </mat-form-field>
+    <div class="no-matches" *ngIf="noMatches">
+        Ningún inventario coincide con ese código
+    </div>
+</div>

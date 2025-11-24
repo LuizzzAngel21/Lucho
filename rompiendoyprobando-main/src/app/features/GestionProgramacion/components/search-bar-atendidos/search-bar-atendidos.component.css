@@ -1,0 +1,2 @@
+.search-bar { display:flex; gap:1rem; flex-wrap:wrap; align-items:center; margin-bottom:1rem; }
+.term-field, .mode-field { width:220px; }

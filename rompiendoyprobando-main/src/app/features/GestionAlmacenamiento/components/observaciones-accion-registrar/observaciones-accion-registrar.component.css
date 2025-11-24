@@ -1,0 +1,70 @@
+.observaciones-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 16px;
+}
+.observaciones-field {
+  width: 100%;
+}
+.acciones {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Estética alineada con el popup y versión input (una sola línea, sin resize) */
+.custom-input {
+  border: 1px solid #c5d4f1 !important;
+  border-radius: 10px !important;
+  background: #f9fbff !important;
+  padding: 10px 14px !important;
+  font-size: 0.95rem;
+  height: 56px; /* Altura visible del control */
+  box-sizing: border-box;
+  color: #1f3b73;
+  caret-color: #1f64ff;
+  transition: border-color 0.22s ease, box-shadow 0.22s ease, background-color 0.22s;
+}
+
+textarea{
+  resize:none;
+}
+
+.custom-input:hover {
+  border-color: #8fb4ff !important;
+}
+
+.custom-input:focus {
+  border-color: #1f64ff !important;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(31, 100, 255, 0.18);
+  background-color: #ffffff !important;
+}
+
+::ng-deep .custom-input::placeholder {
+  color: #5f6e89;
+  opacity: 1;
+}
+
+/* Remueve fondo gris del modo filled */
+::ng-deep .observaciones-field .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+  background-color: transparent;
+}
+
+/* Importante: el alto real del mat-form-field filled lo controla el contenedor MDC */
+::ng-deep .observaciones-field {
+  /* CSS var soportada por MDC para filled text field */
+  --mdc-filled-text-field-container-height: 56px;
+}
+
+/* Aseguramos que la caja interna no agregue padding extra que limite la altura */
+::ng-deep .observaciones-field .mat-mdc-form-field-infix {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  min-height: 0 !important;
+}
+
+/* Alineación vertical del input dentro del contenedor MDC */
+::ng-deep .observaciones-field .mdc-text-field {
+  align-items: center;
+}

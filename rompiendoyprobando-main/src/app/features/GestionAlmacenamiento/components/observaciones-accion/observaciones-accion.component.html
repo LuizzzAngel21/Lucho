@@ -1,0 +1,19 @@
+<div class="observaciones-container">
+    <h3>Observaciones</h3>
+
+    <mat-form-field appearance="fill" class="observaciones-field">
+        <textarea matInput
+                  class="textarea"
+                  [(ngModel)]="texto"
+                  placeholder="Ingrese sus observaciones respecto a la recepción de este lote y su contenido">
+        </textarea>
+    </mat-form-field>
+
+    <div class="acciones">
+        <button mat-raised-button color="primary"
+                (click)="despachar()"
+                [disabled]="!texto.trim()">
+            Despachar
+        </button>
+    </div>
+</div>

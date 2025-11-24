@@ -1,0 +1,108 @@
+<mat-toolbar color="warn">
+  <span class="dialog-title">
+    Registrar Incidencia de Transporte
+  </span>
+  <span class="spacer"></span>
+  <button (click)="onCancel()" [disabled]="isLoading">
+    Cerrar
+  </button>
+</mat-toolbar>
+
+<form [formGroup]="incidenciaForm" (ngSubmit)="onSubmit()" class="dialog-form">
+    <div mat-dialog-content class="form-content">
+
+        <h4 class="mb-4 font-semibold text-lg border-b pb-2">Orden #{{ data.idOrdenDist }} | Vehículo #{{ data.idVehiculo }}</h4>
+        
+        <!-- 🛑 CHECKBOX CONDICIONAL -->
+        <div class="form-field-group full-width">
+            <mat-checkbox 
+                formControlName="problemaConLote" 
+                color="warn" 
+                class="status-checkbox"
+            >
+                ¿La incidencia está asociada a un Lote específico?
+            </mat-checkbox>
+        </div>
+        <!-- 🛑 FIN CHECKBOX -->
+
+        <!-- 🛑 BLOQUE CONDICIONAL PARA SELECCIÓN DEL LOTE -->
+        @if (f['problemaConLote'].value) {
+            <div class="form-field-group full-width">
+                <h4>Lote Afectado *</h4>
+                    <mat-select formControlName="idDetalleDist" [disabled]="f['idDetalleDist'].disabled">
+                        
+                        <!-- Si el lote está preseleccionado, el select está deshabilitado y solo muestra el valor -->
+                        @if (f['idDetalleDist'].disabled) {
+                             <mat-option [value]="f['idDetalleDist'].value">
+                                LOTE PRESELECCIONADO: #{{ f['idDetalleDist'].value }}
+                            </mat-option>
+                        } @else {
+                             <!-- Si no hay lote preseleccionado, permitimos la selección libre -->
+                            @for (loteId of lotesDisponibles; track loteId) {
+                                <mat-option [value]="loteId">LOTE: #{{ loteId }}</mat-option>
+                            }
+                            @if (lotesDisponibles.length === 0) {
+                                <mat-option [disabled]="true">No hay lotes en esta orden.</mat-option>
+                            }
+                        }
+                    </mat-select>
+                    <mat-error *ngIf="f['idDetalleDist'].hasError('required')">Debe seleccionar un lote afectado.</mat-error>
+            </div>
+        }
+        <!-- 🛑 FIN BLOQUE CONDICIONAL -->
+
+
+        <!-- Campo Tipo de Incidencia (Mat Select) -->
+        <div class="form-field-group full-width">
+            <h4>Tipo de Incidencia *</h4>
+            <div>
+                <mat-select formControlName="tipoIncidencia">
+                    @for (tipo of tiposIncidencia; track tipo) {
+                        <mat-option [value]="tipo">{{ tipo }}</mat-option>
+                    }
+                </mat-select>
+                <mat-error *ngIf="f['tipoIncidencia'].hasError('required')">El tipo es obligatorio.</mat-error>
+            </div>
+        </div>
+        
+        <!-- Campo Impacto (Mat Select) -->
+        <div class="form-field-group full-width">
+            <h4>Nivel de Impacto *</h4>
+            
+                <mat-select formControlName="impacto">
+                    @for (impacto of nivelesImpacto; track impacto) {
+                        <mat-option [value]="impacto">{{ impacto }}</mat-option>
+                    }
+                </mat-select>
+                <mat-error *ngIf="f['impacto'].hasError('required')">El impacto es obligatorio.</mat-error>
+            
+        </div>
+        
+        <!-- Campo Descripción (Textarea) -->
+        <div class="form-field-group full-width">
+            <h4>Descripción del Problema *</h4>
+
+            <input formControlName="descripcion" type="text">
+            <mat-error *ngIf="f['descripcion'].hasError('required')">La descripción es obligatoria.</mat-error>
+
+        </div>
+
+    </div>
+
+    <div mat-dialog-actions align="end">
+        <button 
+          type="button" 
+          (click)="onCancel()" 
+          [disabled]="isLoading"
+        >
+          Cancelar
+        </button>
+        <button 
+          color="warn" 
+          type="submit" 
+          [disabled]="incidenciaForm.invalid || isLoading"
+        >
+          Registrar
+        </button>
+    </div>
+</form>

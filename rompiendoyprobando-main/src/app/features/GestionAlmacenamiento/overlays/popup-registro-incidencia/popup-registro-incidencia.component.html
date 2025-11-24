@@ -1,0 +1,32 @@
+<div class="popup-overlay">
+    <div class="popup-container">
+        <h3>Registrar Ficha de Incidencia</h3>
+        <p><strong>ID Lote:</strong> {{ incidenciaData.idLote }} | <strong>ID Producto:</strong> {{
+            incidenciaData.producto }}</p>
+
+        <h3>Fecha de la incidencia</h3>
+        <p>{{ incidenciaData.fecha }}</p>
+
+        <h3>Descripción de la incidencia</h3>
+        <textarea [(ngModel)]="incidenciaData.descripcion"
+            placeholder="Ingresa tu descripción del incidente respecto a la recepción del Lote"></textarea>
+
+        <h3>ID del Transporte y Nombre del responsable</h3>
+        <textarea [(ngModel)]="incidenciaData.transporte"
+            placeholder="Ingresa las credenciales del transporte"></textarea>
+
+        <h3>Prioridad del reenvío</h3>
+        <select [(ngModel)]="incidenciaData.prioridad">
+            <option value="ALTA">ALTA</option>
+            <option value="MEDIA">MEDIA</option>
+            <option value="BAJA">BAJA</option>
+        </select>
+
+        <h3>Estado de la incidencia: <span class="estado">{{ incidenciaData.estado }}</span></h3>
+
+        <div class="button-group">
+            <button class="cancel-btn" (click)="cancelar()">Cancelar</button>
+            <button class="register-btn" (click)="registrar()">Registrar Lote e incidencia</button>
+        </div>
+    </div>
+</div>

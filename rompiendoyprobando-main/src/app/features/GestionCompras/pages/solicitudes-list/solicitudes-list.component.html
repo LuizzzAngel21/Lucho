@@ -1,0 +1,45 @@
+<!-- src/app/GestionCompras/pages/solicitudes-list/solicitudes-list.component.html -->
+
+<div class="page-container">
+    <h2>Solicitudes de Compra Pendientes</h2>
+
+
+    <mat-card class="card-section">
+        <h3>Lista de solicitudes listas para iniciar el proceso de cotización.</h3>
+
+
+        <div class="search-bar">
+            
+            <h3>Buscar Solicitud</h3>
+            <input 
+                type="text" 
+                [(ngModel)]="filtroBusqueda" 
+                placeholder="Buscar por ID, Área o Solicitante"
+            >
+            
+        </div>
+
+
+        @if (!isLoading) {
+            @if (getSolicitudesFiltradas() && getSolicitudesFiltradas()!.length > 0) {
+                <app-solicitudes-compra-table
+                    [solicitudes]="getSolicitudesFiltradas()"
+                    (cotizar)="onVerCotizacion($event)">
+                </app-solicitudes-compra-table>
+            } @else {
+                <div class="empty-state centered-content">
+                    <h2>No se encontraron Solicitudes Pendientes</h2>
+                    <p>Ajuste los criterios de búsqueda o verifique si existen órdenes históricas.</p>
+                </div>
+            }
+        }
+
+    </mat-card>
+    
+
+    <div class="footer-actions">
+        <button color="default" [routerLink]="['/GestionCompras/historial-compras']">
+            Ver Historial General de Compras
+        </button>
+    </div>
+</div>

@@ -1,0 +1,89 @@
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1200;
+}
+
+.popup-container {
+  background: #ffffff;
+  padding: 25px 35px;
+  border-radius: 10px;
+  width: 600px;
+  color: #1f3b73;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.info-section p {
+  margin: 4px 0;
+}
+
+.table-container {
+  max-height: 220px;
+  overflow-y: auto;
+  margin-bottom: 15px;
+  border: 1px solid #c5d4f1;
+  border-radius: 6px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #f9fbff;
+}
+
+th, td {
+  padding: 8px 10px;
+  border-bottom: 1px solid #d8e2f4;
+  text-align: left;
+  font-size: 14px;
+}
+
+th {
+  background-color: #e5edff;
+  color: #1b3e83;
+}
+
+.incidencia-section {
+  background-color: #f5f8ff;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border-left: 4px solid #1f64ff;
+  margin-top: 15px;
+}
+
+.button-group {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+  gap: 10px;
+}
+
+button {
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.resolve-btn {
+  background-color: #1f64ff;
+  color: #fff;
+}
+
+.back-btn {
+  background-color: #ccc;
+  color: #333;
+}
+
+.resuelta {
+  color: #1ba14e;
+  font-weight: 600;
+}
