@@ -1,12 +1,10 @@
-// Ubicación: com/farmaceutica/distribucion/service/ServiceActualizarOrdenDistribucion.java
-
 package com.farmaceutica.distribucion.service;
 
 import com.farmaceutica.distribucion.dto.DetalleOrdenDistribucionDto;
 import com.farmaceutica.distribucion.dto.OrdenDistribucionDto;
 import com.farmaceutica.distribucion.dto.SeguimientoCreateDto;
 import com.farmaceutica.distribucion.dto.SeguimientoVehiculoDto;
-import com.farmaceutica.distribucion.dto.VehiculoDto; // <-- Corregido (usa el DTO que creaste)
+import com.farmaceutica.distribucion.dto.VehiculoDto;
 
 import java.util.List;
 
@@ -30,7 +28,7 @@ public interface ServiceActualizarOrdenDistribucion {
      * Consulta los vehículos disponibles.
      * @return Lista de DTOs de vehículos.
      */
-    List<VehiculoDto> consultarVehiculosDisponibles(); // <-- Corregido
+    List<VehiculoDto> consultarVehiculosDisponibles();
 
     /**
      * Registra un nuevo viaje (Seguimiento) y sus detalles (Transporte).
@@ -41,4 +39,8 @@ public interface ServiceActualizarOrdenDistribucion {
      * @return El DTO del seguimiento creado.
      */
     SeguimientoVehiculoDto registrarVehiculoAOrden(SeguimientoCreateDto dto);
+
+    void cancelarOrden(Integer idOrden);
+
+    void confirmarEntrega(Integer idOrden);
 }

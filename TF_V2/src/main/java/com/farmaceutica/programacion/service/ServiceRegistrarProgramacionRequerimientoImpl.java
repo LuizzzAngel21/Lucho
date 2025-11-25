@@ -49,7 +49,14 @@ public class ServiceRegistrarProgramacionRequerimientoImpl implements ServiceReg
     @Override
     public List<InventarioStockDto> consultarStockDeProducto(Integer productoId) {
         // Busca solo lotes con stock > 0
-        List<Inventario> inventario = inventarioRepository.findByIdLote_IdProducto_IdAndStockActualGreaterThan(productoId, 0);
+        List<Inventario> inventario = inventarioRepository
+                .findByIdLote_IdProducto_IdAndStockActualGreaterThan(productoId, 0);
         return inventarioMapper.toInventarioStockDto(inventario);
+    }
+
+    @Override
+    public List<RequerimientoResumenDto> consultarRequerimientosAtendidos() {
+        List<Requerimiento> requerimientos = requerimientoRepository.findByEstado("Atendido");
+        return requerimientoMapper.toRequerimientoResumenDto(requerimientos);
     }
 }

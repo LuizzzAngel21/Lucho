@@ -58,9 +58,33 @@ export class ComprasService {
         telefono: cot.idProveedor.telefono,
         correo: cot.idProveedor.correo,
         estado: cot.idProveedor.estado,
-        precioReferencial: cot.precioUnitario
+        precioReferencial: cot.precioReferencial,
+        idProductoProveedor: cot.id
       })))
     );
+  }
+
+  /**
+   * Registra una nueva cotización (relación producto-proveedor).
+   */
+  registrarCotizacion(idProducto: number, idProveedor: number, precio: number): Observable<any> {
+    const payload = {
+      idProducto: idProducto,
+      idProveedor: idProveedor,
+      precioReferencial: precio
+    };
+    return this.http.post<any>(`${this.apiUrl}/cotizaciones`, payload);
+  }
+
+  /**
+   * Actualiza una cotización existente.
+   */
+  actualizarCotizacion(idProductoProveedor: number, nuevoPrecio: number): Observable<any> {
+    const payload = {
+      idProductoProveedor: idProductoProveedor,
+      nuevoPrecio: nuevoPrecio
+    };
+    return this.http.put<any>(`${this.apiUrl}/cotizaciones`, payload);
   }
 
   /**

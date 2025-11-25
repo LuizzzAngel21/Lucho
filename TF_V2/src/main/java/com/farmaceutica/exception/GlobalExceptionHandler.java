@@ -82,6 +82,20 @@ public class GlobalExceptionHandler {
     }
 
     // ===========================================================
+    // 409 — Violación de integridad de datos (FK, Unique, etc.)
+    // ===========================================================
+    @ExceptionHandler(org.springframework.dao.DataIntegrityViolationException.class)
+    public ResponseEntity<?> handleDataIntegrityViolation(org.springframework.dao.DataIntegrityViolationException ex) {
+        // Extraer mensaje raíz si es posible, o dar uno genérico
+        String msg = "Error de integridad de datos. Verifique que los datos referenciados existan.";
+        if (ex.getRootCause() != null) {
+            msg = ex.getRootCause().getMessage();
+        }
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(response(false, msg, null));
+    }
+
+    // ===========================================================
     // Helper para formato uniforme
     // ===========================================================
     private Map<String, Object> response(boolean success, String message, Object data) {

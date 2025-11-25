@@ -1,6 +1,9 @@
 import { Component, Input } from '@angular/core';
-import { RequerimientoPendiente } from '../../services/programacion.service';
+import { Requerimiento } from '../../services/programacion.service';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { MatTableModule } from '@angular/material/table';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-requerimientos-pendientes-table',
@@ -9,7 +12,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./requerimientos-pendientes-table.component.css']
 })
 export class RequerimientosPendientesTableComponent {
-  @Input() data: RequerimientoPendiente[] = [];
+  @Input() data: Requerimiento[] = [];
+
 
   displayedColumns: string[] = [
     'id_req',
@@ -23,7 +27,7 @@ export class RequerimientosPendientesTableComponent {
 
   constructor(private router: Router) { }
 
-  atender(row: RequerimientoPendiente) {
+  atender(row: Requerimiento) {
     // Navega a disponibilidad-producto pasando id del requerimiento
     this.router.navigate(['/GestionProgramacion/disponibilidad-producto/', row.id_req]);
   }

@@ -10,8 +10,10 @@
 	<mat-form-field appearance="outline" class="mode-field">
 		<mat-label>Tipo</mat-label>
 		<mat-select [value]="modo" (selectionChange)="onModo($event.value)">
+			<mat-option value="REQUERIMIENTOS">REQUERIMIENTOS</mat-option>
 			<mat-option value="DISTRIBUCION">DISTRIBUCION</mat-option>
 			<mat-option value="COMPRAS">COMPRAS</mat-option>
 		</mat-select>
 	</mat-form-field>
 </div>
+

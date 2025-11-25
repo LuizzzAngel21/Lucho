@@ -10,12 +10,14 @@ public interface ServiceRegistrarProgramacionRequerimiento {
 
     /**
      * Consulta los requerimientos pendientes.
+     * 
      * @return Lista de DTOs con el resumen de requerimientos.
      */
     List<RequerimientoResumenDto> consultarRequerimientosPendientes();
 
     /**
      * Consulta los detalles (productos) de un requerimiento específico.
+     * 
      * @param requerimientoId El ID del requerimiento a detallar.
      * @return Lista de DTOs con los detalles de los productos.
      */
@@ -23,8 +25,16 @@ public interface ServiceRegistrarProgramacionRequerimiento {
 
     /**
      * Consulta el stock disponible (lotes y almacenes) para un producto específico.
+     * 
      * @param productoId El ID del producto a consultar.
      * @return Lista de DTOs del inventario con stock positivo.
      */
     List<InventarioStockDto> consultarStockDeProducto(Integer productoId);
+
+    /**
+     * Consulta los requerimientos atendidos.
+     * 
+     * @return Lista de DTOs con el resumen de requerimientos atendidos.
+     */
+    List<RequerimientoResumenDto> consultarRequerimientosAtendidos();
 }

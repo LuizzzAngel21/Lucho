@@ -15,17 +15,17 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 
 //Components
-import {RequerimientosPendientesTableComponent} from './components/requerimientos-pendientes-table/requerimientos-pendientes-table.component';
+import { RequerimientosPendientesTableComponent } from './components/requerimientos-pendientes-table/requerimientos-pendientes-table.component';
 
 //Overlays
 
-import {PopupDetalleDeRequerimientoComponent} from './overlays/popup-detalle-de-requerimiento/popup-detalle-de-requerimiento.component';
-import {PopupDetalleSolicitudDeCompraComponent} from './overlays/popup-detalle-solicitud-de-compra/popup-detalle-solicitud-de-compra.component';
-import {PopupDetalleOrdenDistribucionComponent} from './overlays/popup-detalle-de-ordenDistribucion/popup-detalle-ordenDistribucion.component';
+import { PopupDetalleDeRequerimientoComponent } from './overlays/popup-detalle-de-requerimiento/popup-detalle-de-requerimiento.component';
+import { PopupDetalleSolicitudDeCompraComponent } from './overlays/popup-detalle-solicitud-de-compra/popup-detalle-solicitud-de-compra.component';
+import { PopupDetalleOrdenDistribucionComponent } from './overlays/popup-detalle-de-ordenDistribucion/popup-detalle-ordenDistribucion.component';
 
 
 // Pages
-import { ListaRequerimientosComponent} from './pages/lista-requerimientos-noatendidos/lista-requerimientos-noatendidos.component';
+import { ListaRequerimientosComponent } from './pages/lista-requerimientos-noatendidos/lista-requerimientos-noatendidos.component';
 import { ListaRequerimientosAtendidosComponent } from './pages/lista-requerimientos-atendidos/lista-requerimientos-atendidos.component';
 import { SearchBarNoAtendidosComponent } from './components/search-bar-no-atendidos/search-bar-no-atendidos.component';
 
@@ -38,7 +38,8 @@ import { DisponibilidadProductoComponent } from './pages/disponibilidad-producto
     declarations: [
         RequerimientosPendientesTableComponent,
         ListaRequerimientosComponent,
-        SearchBarNoAtendidosComponent,
+        ListaRequerimientosAtendidosComponent,
+        SearchBarNoAtendidosComponent
     ],
     imports: [
         ProgramacionRoutingModule,
@@ -57,12 +58,13 @@ import { DisponibilidadProductoComponent } from './pages/disponibilidad-producto
         SearchBarAtendidosComponent,
         OrdenDistribucionTableComponent,
         SolicitudComprasTableComponent,
-        ListaRequerimientosAtendidosComponent,
         PopupDetalleDeRequerimientoComponent,
         PopupDetalleSolicitudDeCompraComponent,
         PopupDetalleOrdenDistribucionComponent
-    ]
+    ],
+
 })
 
 
-export class ProgramacionModule {}
+export class ProgramacionModule { }
+

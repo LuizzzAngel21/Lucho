@@ -177,37 +177,100 @@ export class DistribucionService {
    * Usado en: MonitoreoVehiculosListComponent (acción 'Info Vehiculo')
    */
   getInfoVehiculo(idVehiculo: number): Observable<Vehiculo> {
-    // No direct endpoint for single vehicle info in controller, 
-    // but we can fetch available or use what we have.
-    // Returning mock or filtering from list if needed.
-    // For now, returning empty observable or throwing error as endpoint missing
-    return throwError(() => new Error(`Endpoint para vehículo ${idVehiculo} no implementado.`));
+    // Fetch from available vehicles and filter by ID
+    return this.http.get<any>(`${this.apiUrl}/vehiculos/disponibles`).pipe(
+      map(response => {
+        const vehiculo = response.data.find((v: any) => v.id === idVehiculo);
+        if (!vehiculo) {
+          throw new Error(`Vehículo ${idVehiculo} no encontrado`);
+        }
+        return {
+          id: vehiculo.id,
+          placa: vehiculo.placa,
+          marca: vehiculo.marca,
+          modelo: vehiculo.modelo,
+          tipoVehiculo: vehiculo.tipoVehiculo,
+          estado: vehiculo.estado,
+          disponible: vehiculo.estado === 'Disponible'
+        };
+      })
+    );
   }
 
   confirmarEntrega(idOrden: number): Observable<void> {
-    // No direct endpoint in DistribucionController for confirming delivery of entire order?
-    // Maybe update status via PUT?
-    // Using mock logic or generic update if available.
-    return of(undefined);
+    return this.http.put<any>(`${this.apiUrl}/ordenes/${idOrden}/entregar`, {}).pipe(
+      map(() => undefined)
+    );
   }
 
   cancelarOrden(idOrden: number): Observable<void> {
-    // No direct endpoint in DistribucionController for cancelling order?
-    return of(undefined);
+    return this.http.put<any>(`${this.apiUrl}/ordenes/${idOrden}/cancelar`, {}).pipe(
+      map(() => undefined)
+    );
   }
 
   getDetalleReporteOrden(idOrden: number): Observable<DetalleOrdenCompleta> {
-    // Complex aggregation, might need multiple calls
-    return of({} as DetalleOrdenCompleta);
+    // Aggregate orden details with detalles and seguimientos
+    return forkJoin({
+      ordenes: this.getOrdenesDistribucion(),
+      detalles: this.http.get<any>(`${this.apiUrl}/ordenes/${idOrden}/detalles`),
+      seguimientos: this.getSeguimientoVehiculos()
+    }).pipe(
+      map(({ ordenes, detalles, seguimientos }) => {
+        const orden = ordenes.find(o => o.id === idOrden);
+        if (!orden) {
+          throw new Error(`Orden ${idOrden} no encontrada`);
+        }
+
+        const seguimientosOrden = seguimientos.filter(s => s.idOrdenDistId === idOrden);
+
+        return {
+          idOrden: orden.id,
+          fechaDistribucion: orden.fechaDistribucion,
+          estado: orden.estado,
+          prioridad: orden.prioridad,
+          detalles: detalles.data.map((d: any) => ({
+            idProducto: d.idProducto.id,
+            nombreProducto: d.idProducto.nombreProducto,
+            cantidad: d.cantidad,
+            idLote: d.idLote.id,
+            numeroLote: d.idLote.numeroLote,
+            estadoEntrega: d.estadoEntrega
+          })),
+          seguimientos: seguimientosOrden.map(s => ({
+            idVehiculo: s.idVehiculo.id,
+            placa: s.idVehiculo.placa,
+            estadoActual: s.estadoActual,
+            ubicacionActual: s.ubicacionActual
+          })),
+          totalLotes: detalles.data.length
+        } as any;
+      })
+    );
   }
   /**
    * Obtiene la lista de incidencias para una orden específica.
    * Usado en: IncidenciasReporteComponent
    */
   getIncidenciasByOrdenId(idOrden: number): Observable<IncidenciaReporte[]> {
-    // No direct endpoint for incidences by order in DistribucionController.
-    // Only by vehicle.
-    return of([]);
+    // Get seguimientos for the order, then get incidences for each vehicle
+    return this.getSeguimientoVehiculos().pipe(
+      switchMap(seguimientos => {
+        const seguimientosOrden = seguimientos.filter(s => s.idOrdenDistId === idOrden);
+        if (seguimientosOrden.length === 0) {
+          return of([]);
+        }
+
+        const vehiculoIds = [...new Set(seguimientosOrden.map(s => s.idVehiculo.id))];
+        const incidenciaRequests = vehiculoIds.map(idVehiculo =>
+          this.getIncidenciasByVehiculo(idVehiculo)
+        );
+
+        return forkJoin(incidenciaRequests).pipe(
+          map(responses => responses.flat())
+        );
+      })
+    );
   }
 
   /**
@@ -221,6 +284,34 @@ export class DistribucionService {
         totalLotes: 0,
         tieneIncidencias: false
       } as any)))
+    );
+  }
+
+  /**
+   * Obtiene las incidencias reportadas para un vehículo específico.
+   * Usado en: Reportes de incidencias
+   */
+  getIncidenciasByVehiculo(idVehiculo: number): Observable<IncidenciaReporte[]> {
+    return this.http.get<any>(`${this.apiUrl}/vehiculos/${idVehiculo}/incidencias`).pipe(
+      map(response => response.data.map((i: any) => ({
+        id: i.id,
+        idVehiculo: i.idVehiculo.id,
+        placaVehiculo: i.idVehiculo.placa,
+        tipoIncidencia: i.tipoIncidencia,
+        descripcion: i.descripcion,
+        estado: i.estado,
+        fechaIncidencia: i.fechaIncidencia,
+        usuarioReporta: i.idUsuarioReportaNombreUsuario || 'N/A'
+      })))
+    );
+  }
+
+  /**
+   * Registra una nueva incidencia de transporte.
+   */
+  registrarIncidencia(incidencia: any): Observable<void> {
+    return this.http.post<any>(`${this.apiUrl}/incidencias`, incidencia).pipe(
+      map(() => undefined)
     );
   }
 

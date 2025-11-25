@@ -38,6 +38,18 @@ public class DistribucionController {
         return ResponseEntity.ok(Map.of("success", true, "data", data));
     }
 
+    @PutMapping("/ordenes/{idOrdenDist}/cancelar")
+    public ResponseEntity<?> cancelarOrden(@PathVariable Integer idOrdenDist) {
+        serviceActualizarOrdenDistribucion.cancelarOrden(idOrdenDist);
+        return ResponseEntity.ok(Map.of("success", true, "message", "Orden cancelada correctamente"));
+    }
+
+    @PutMapping("/ordenes/{idOrdenDist}/entregar")
+    public ResponseEntity<?> confirmarEntrega(@PathVariable Integer idOrdenDist) {
+        serviceActualizarOrdenDistribucion.confirmarEntrega(idOrdenDist);
+        return ResponseEntity.ok(Map.of("success", true, "message", "Orden entregada correctamente"));
+    }
+
     // ===========================================================
     // VEHÍCULOS Y SEGUIMIENTO
     // ===========================================================

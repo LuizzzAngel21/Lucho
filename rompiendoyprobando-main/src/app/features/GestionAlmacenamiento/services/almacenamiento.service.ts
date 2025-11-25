@@ -36,9 +36,19 @@ export class AlmacenamientoService {
 
   // Devuelve lotes recibidos (estructura simple para registro) usados aún por la página registro-lote
   getLotesRecibidos(): Observable<LoteRecibido[]> {
-    // TODO: Verify endpoint for this. Using mock for now as no direct mapping found.
-    // Might need to fetch from Compras or Programacion if not in Almacenamiento
-    return of([]);
+    // Usamos el endpoint de Compras para obtener las órdenes pendientes de recepción
+    // Asumimos que el estado para recepción es 'Pendiente' o 'GENERADA'
+    return this.http.get<any>(`${environment.apiUrl}/api/compras/ordenes-compra?estado=PENDIENTE`).pipe(
+      map(response => response.data.map((oc: any) => ({
+        id_lote: '', // Se generará al registrar
+        id_proveedor: oc.nombreProveedor, // Mapeamos nombre para visualización
+        id_orden_comp: oc.id.toString(),
+        id_producto: 'Varios', // La orden puede tener varios productos
+        cantidad: 0, // Se define al registrar
+        lote: oc.numeroOrden, // Usamos nro orden como referencia visual
+        fecha_caducidad: oc.fechaEntregaEstimada
+      })))
+    );
   }
 
   getLotesAtendidos(): Observable<Inventario[]> {

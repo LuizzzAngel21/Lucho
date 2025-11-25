@@ -72,6 +72,12 @@ public class ComprasController {
                 "idOrdenCompra", idOrdenCompra));
     }
 
+    @GetMapping("/ordenes-compra")
+    public ResponseEntity<?> listarOrdenesPorEstado(@RequestParam String estado) {
+        List<OrdenCompraDto> data = serviceRegistrarOrdenDeCompra.listarOrdenesPorEstado(estado);
+        return ResponseEntity.ok(Map.of("success", true, "data", data));
+    }
+
     // ===========================================================
     // PROVEEDORES
     // ===========================================================

@@ -65,11 +65,10 @@ public class ServiceRegistrarOrdenImpl implements ServiceRegistrarOrden {
 
             idSolicitud = procesarCompra(req, request.solicitudCompra());
 
-            marcarRequerimientoEnProceso(req);
+            marcarRequerimientoAtendido(req);
 
             return new ProgramacionResultadoDto(
-                    "COMPRA", idSolicitud, null, "Solicitud de compra creada con éxito."
-            );
+                    "COMPRA", idSolicitud, null, "Solicitud de compra creada con éxito.");
         }
 
         // === DISTRIBUCIÓN ===
@@ -84,16 +83,14 @@ public class ServiceRegistrarOrdenImpl implements ServiceRegistrarOrden {
             idOrden = procesarDistribucion(req, request.detallesDistribucion());
 
             // 👇 Ahora SÍ se marca En Proceso
-            marcarRequerimientoEnProceso(req);
+            marcarRequerimientoAtendido(req);
 
             return new ProgramacionResultadoDto(
-                    "DISTRIBUCION", null, idOrden, "Orden de distribución creada con éxito."
-            );
+                    "DISTRIBUCION", null, idOrden, "Orden de distribución creada con éxito.");
         }
 
         throw new BusinessException("Tipo no soportado: " + tipo);
     }
-
 
     // -------------------------------------------------------
     // PROCESAR COMPRA
@@ -110,9 +107,10 @@ public class ServiceRegistrarOrdenImpl implements ServiceRegistrarOrden {
 
         SolicitudCompra sc = new SolicitudCompra();
         sc.setIdRequerimiento(req);
-        sc.setIdUsuarioSolicitante(dto.idUsuarioSolicitante());
+        // Usar el usuario del requerimiento original para asegurar integridad referencial
+        sc.setIdUsuarioSolicitante(req.getIdUsuarioSolicitante());
         sc.setMotivo(dto.motivo());
-        sc.setEstado("Pendiente");
+        sc.setEstado("PENDIENTE");
 
         SolicitudCompra cabecera = solicitudCompraRepository.save(sc);
 
@@ -125,7 +123,7 @@ public class ServiceRegistrarOrdenImpl implements ServiceRegistrarOrden {
             d.setIdDetalleRequerimiento(detDto.idDetalleRequerimiento());
             d.setCantidadSolicitada(detDto.cantidadSolicitada());
             d.setCantidadAprobada(0);
-            d.setEstado("Pendiente");
+            d.setEstado("PENDIENTE");
             return d;
 
         }).collect(Collectors.toList());
@@ -144,7 +142,7 @@ public class ServiceRegistrarOrdenImpl implements ServiceRegistrarOrden {
         od.setIdRequerimiento(req.getId());
         od.setIdUsuarioCreacion(req.getIdUsuarioSolicitante());
         od.setPrioridad(req.getPrioridad());
-        od.setEstado("Pendiente");
+        od.setEstado("PENDIENTE");
 
         OrdenDistribucion cabecera = ordenDistribucionRepository.save(od);
 
@@ -164,11 +162,12 @@ public class ServiceRegistrarOrdenImpl implements ServiceRegistrarOrden {
                     .orElseThrow(() -> new EntityNotFoundException("Lote no encontrado: " + dto.idLote()));
 
             if (!Objects.equals(lote.getIdProducto().getId(), dto.idProducto()))
-                throw new BusinessException("El lote " + dto.idLote() + " no pertenece al producto " + dto.idProducto());
+                throw new BusinessException(
+                        "El lote " + dto.idLote() + " no pertenece al producto " + dto.idProducto());
 
             dod.setIdLote(lote);
             dod.setCantidad(dto.cantidad());
-            dod.setEstadoEntrega("Pendiente");
+            dod.setEstadoEntrega("PENDIENTE");
             dod.setCondicionesTransporte(producto.getCondicionesTransporte());
 
             return dod;
@@ -197,8 +196,8 @@ public class ServiceRegistrarOrdenImpl implements ServiceRegistrarOrden {
         return req;
     }
 
-    private void marcarRequerimientoEnProceso(Requerimiento req) {
-        req.setEstado("En Proceso");
+    private void marcarRequerimientoAtendido(Requerimiento req) {
+        req.setEstado("Atendido");
         requerimientoRepository.save(req);
     }
 

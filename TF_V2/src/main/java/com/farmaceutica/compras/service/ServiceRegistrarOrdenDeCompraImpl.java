@@ -1,4 +1,3 @@
-
 package com.farmaceutica.compras.service;
 
 import com.farmaceutica.compras.dto.*;
@@ -40,7 +39,6 @@ public class ServiceRegistrarOrdenDeCompraImpl implements ServiceRegistrarOrdenD
     private final SolicitudCompraMapper solicitudCompraMapper;
     private final DetalleSolicitudCompraMapper detalleSolicitudCompraMapper;
 
-
     // --- Flujo de Solicitud ---
     @Override
     @Transactional(readOnly = true)
@@ -60,10 +58,8 @@ public class ServiceRegistrarOrdenDeCompraImpl implements ServiceRegistrarOrdenD
     public List<ProductoProveedorDto> consultarCotizacionesDeProducto(Integer idProducto) {
         // Usa el método que definimos en el repositorio
         return productoProveedorMapper.toDto(
-                productoProveedorRepository.findByIdProducto_Id(idProducto)
-        );
+                productoProveedorRepository.findByIdProducto_Id(idProducto));
     }
-
 
     @Override
     public ProductoProveedorDto registrarCotizacion(ProductoProveedorCreateDto dto) {
@@ -108,7 +104,7 @@ public class ServiceRegistrarOrdenDeCompraImpl implements ServiceRegistrarOrdenD
         oc.setNumeroOrden(dto.numeroOrden());
         oc.setFechaEntregaEstimada(dto.fechaEntregaEstimada());
         oc.setObservaciones(dto.observaciones());
-        oc.setEstado("Pendiente"); // Estado inicial
+        oc.setEstado("PENDIENTE"); // Estado inicial
 
         // ¡Importante! Subtotal, IGV y Total se calculan con el TRIGGER de BD.
         // No los seteamos aquí.
@@ -123,7 +119,7 @@ public class ServiceRegistrarOrdenDeCompraImpl implements ServiceRegistrarOrdenD
             doc.setIdDetalleSolicitud(detalleDto.idDetalleSolicitud());
             doc.setCantidad(detalleDto.cantidad());
             doc.setPrecioUnitario(detalleDto.precioUnitario());
-            doc.setEstado("Pendiente");
+            doc.setEstado("PENDIENTE");
 
             // ¡Importante! El 'subtotal' del detalle también se calcula
             // con un campo GENERATED en tu BD. (Recuerda poner insertable=false
@@ -139,5 +135,30 @@ public class ServiceRegistrarOrdenDeCompraImpl implements ServiceRegistrarOrdenD
         solicitudCompraRepository.save(solicitud);
 
         return cabeceraGuardada.getId();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<OrdenCompraDto> listarOrdenesPorEstado(String estado) {
+        List<OrdenCompra> ordenes = ordenCompraRepository.findByEstado(estado);
+        return ordenes.stream().map(oc -> {
+            String nombreProveedor = "Desconocido";
+            String rucProveedor = "N/A";
+            if (oc.getIdProveedor() != null) {
+                var p = proveedorRepository.findById(oc.getIdProveedor()).orElse(null);
+                if (p != null) {
+                    nombreProveedor = p.getNombreProveedor();
+                    rucProveedor = p.getRuc();
+                }
+            }
+            return new OrdenCompraDto(
+                    oc.getId(),
+                    oc.getNumeroOrden(),
+                    nombreProveedor,
+                    rucProveedor,
+                    oc.getFechaEntregaEstimada(),
+                    oc.getEstado(),
+                    oc.getObservaciones());
+        }).collect(Collectors.toList());
     }
 }

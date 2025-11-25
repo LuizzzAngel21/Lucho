@@ -70,5 +70,4 @@ public class IncidenciaTransporte {
 
     @Column(name = "observaciones", length = Integer.MAX_VALUE)
     private String observaciones;
-
 }

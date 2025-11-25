@@ -160,6 +160,28 @@ export class ProgramacionService {
     return this.getRequerimientosPendientes().pipe(map(this.mapRequerimientosToRows));
   }
 
+  // Requerimientos atendidos
+  getRequerimientosAtendidos(): Observable<Requerimiento[]> {
+    return this.http.get<any>(`${this.apiUrl}/requerimientos/atendidos`).pipe(
+      map(response => response.data.map((r: any) => ({
+        id_req: r.id.toString(),
+        id_usr: r.idUsuarioSolicitanteNombreUsuario || 'N/A',
+        id_dep: r.idDepartamentoNombreDepartamento,
+        fecha: r.fechaSolicitud,
+        descripcion: r.prioridad, // Using priority as description placeholder
+        prioridad: r.prioridad,
+        status_req: 'atendido',
+        productos: []
+      })))
+    );
+  }
+
+  getRequerimientosAtendidosTabla(): Observable<RequerimientoRow[]> {
+    return this.getRequerimientosAtendidos().pipe(map(this.mapRequerimientosToRows));
+  }
+
+
+
   private mapRequerimientosToRows(rs: Requerimiento[]): RequerimientoRow[] {
     return rs.map((r) => ({
       id_req: r.id_req,
