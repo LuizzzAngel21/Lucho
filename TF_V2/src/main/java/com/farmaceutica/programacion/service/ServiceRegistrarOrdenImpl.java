@@ -107,8 +107,7 @@ public class ServiceRegistrarOrdenImpl implements ServiceRegistrarOrden {
 
         SolicitudCompra sc = new SolicitudCompra();
         sc.setIdRequerimiento(req);
-        // Usar el usuario del requerimiento original para asegurar integridad referencial
-        sc.setIdUsuarioSolicitante(req.getIdUsuarioSolicitante());
+        sc.setIdUsuarioSolicitante(dto.idUsuarioSolicitante());
         sc.setMotivo(dto.motivo());
         sc.setEstado("PENDIENTE");
 

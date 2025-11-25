@@ -14,5 +14,5 @@ public record ProgramacionRequestDto(
         @NotNull Integer idRequerimiento,
         @TipoProgramacionValido String tipo,
         @Valid SolicitudCompraCreateDto solicitudCompra,
-        @Valid List<DetalleOrdenDistribucionCreateDto> detallesDistribucion
+        @Valid @Size(min = 1) List<DetalleOrdenDistribucionCreateDto> detallesDistribucion
 ) {}
