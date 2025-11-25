@@ -19,25 +19,41 @@ public class SecurityConfig {
                 // Es necesario para que funcionen las peticiones POST/PUT/DELETE
                 // desde Postman sin un token especial.
                 .csrf(AbstractHttpConfigurer::disable)
+                // 2. CONFIGURAR CORS EXPLICITAMENTE
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
 
-                // 2. CONFIGURAR REGLAS DE AUTORIZACIÓN
+                // 3. CONFIGURAR REGLAS DE AUTORIZACIÓN
                 .authorizeHttpRequests(auth -> auth
 
-                                // ¡ESTA ES LA LÍNEA CLAVE PARA DESARROLLO!
-                                // .anyRequest().permitAll() significa:
-                                // "Permitir TODAS (any) las peticiones (Request) SIN autenticación."
-                                .anyRequest().permitAll()
+                        // ¡ESTA ES LA LÍNEA CLAVE PARA DESARROLLO!
+                        // .anyRequest().permitAll() significa:
+                        // "Permitir TODAS (any) las peticiones (Request) SIN autenticación."
+                        .anyRequest().permitAll()
 
-                /* --- NOTA PARA EL FUTURO ---
-                Cuando quieras activar la seguridad, cambiarás esa línea por:
-
-                .requestMatchers("/api/auth/**").permitAll() // Permitir login
-                .anyRequest().authenticated() // Proteger todo lo demás
-
-                --------------------------
-                */
+                /*
+                 * --- NOTA PARA EL FUTURO ---
+                 * Cuando quieras activar la seguridad, cambiarás esa línea por:
+                 * 
+                 * .requestMatchers("/api/auth/**").permitAll() // Permitir login
+                 * .anyRequest().authenticated() // Proteger todo lo demás
+                 * 
+                 * --------------------------
+                 */
                 );
 
         return http.build();
+    }
+
+    @Bean
+    public org.springframework.web.cors.CorsConfigurationSource corsConfigurationSource() {
+        org.springframework.web.cors.CorsConfiguration configuration = new org.springframework.web.cors.CorsConfiguration();
+        configuration.setAllowedOrigins(java.util.Arrays.asList("http://localhost:4200"));
+        configuration.setAllowedMethods(java.util.Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedHeaders(java.util.Arrays.asList("*"));
+        configuration.setAllowCredentials(true);
+
+        org.springframework.web.cors.UrlBasedCorsConfigurationSource source = new org.springframework.web.cors.UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
 }

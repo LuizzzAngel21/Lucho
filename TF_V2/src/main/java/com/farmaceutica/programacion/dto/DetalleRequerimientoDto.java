@@ -30,6 +30,8 @@ public class DetalleRequerimientoDto implements Serializable {
         String nombreProducto;
         @Size(max = 50)
         String codigoDigemid;
+        @Size(max = 50)
+        String registroSanitario;
         String idTipoNombreTipo;
         String idFormaNombreForma;
         @Size(max = 100)

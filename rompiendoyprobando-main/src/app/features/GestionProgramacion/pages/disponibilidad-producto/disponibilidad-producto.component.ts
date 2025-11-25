@@ -17,13 +17,15 @@ import { CommonModule } from '@angular/common';
 
 export class DisponibilidadProductoComponent implements OnInit {
     reqIdActual: string | null = null;
-    productos: (Producto & { decision?: 'COMPRAS' | 'DISTRIBUCION' })[] = [];
+    productos: (Producto & { decision?: 'COMPRAS' | 'DISTRIBUCION'; loteSeleccionado?: number })[] = [];
     observaciones = '';
     mostrarPopupStock = false;
     lotesProducto: LoteProducto[] = [];
     nombreProductoSeleccionado = '';
 
-    constructor(private programacionService: ProgramacionService, private route: ActivatedRoute) {}
+    productoEnRevision: (Producto & { decision?: 'COMPRAS' | 'DISTRIBUCION'; loteSeleccionado?: number }) | null = null;
+
+    constructor(private programacionService: ProgramacionService, private route: ActivatedRoute) { }
 
     ngOnInit(): void {
         const idFromRoute = this.route.snapshot.paramMap.get('id');
@@ -43,22 +45,23 @@ export class DisponibilidadProductoComponent implements OnInit {
             // preservar decisiones existentes si recarga
             this.productos = lista.map(m => {
                 const prev = this.productos.find(x => x.id_producto === m.id_producto);
-                return { ...m, decision: prev?.decision };
+                return { ...m, decision: prev?.decision, loteSeleccionado: prev?.loteSeleccionado };
             });
         });
     }
 
     onAtender(payload: { productos: (Producto & { decision?: 'COMPRAS' | 'DISTRIBUCION' })[]; observaciones: string }) {
         if (this.reqIdActual) {
-            // Aquí podríamos persistir decisiones antes de aceptar
-            this.programacionService.aceptarRequerimiento(this.reqIdActual);
+            this.programacionService.aceptarRequerimiento(this.reqIdActual, payload.productos);
         }
-        history.back();
+        // No volver atrás inmediatamente, esperar respuesta del servicio (que tiene alert)
+        // history.back(); 
     }
 
     onVolver() { history.back(); }
 
-    onRevisarStock(producto: Producto) {
+    onRevisarStock(producto: any) {
+        this.productoEnRevision = producto;
         this.nombreProductoSeleccionado = producto.nombre_producto;
         this.programacionService.getLotesByProducto(producto.id_producto).subscribe(l => {
             this.lotesProducto = l;
@@ -66,9 +69,17 @@ export class DisponibilidadProductoComponent implements OnInit {
         });
     }
 
+    onLoteSeleccionado(idLote: number) {
+        if (this.productoEnRevision) {
+            this.productoEnRevision.loteSeleccionado = idLote;
+            alert(`Lote ${idLote} seleccionado para ${this.productoEnRevision.nombre_producto}`);
+        }
+    }
+
     cerrarPopupStock() {
         this.mostrarPopupStock = false;
         this.lotesProducto = [];
         this.nombreProductoSeleccionado = '';
+        this.productoEnRevision = null;
     }
 }

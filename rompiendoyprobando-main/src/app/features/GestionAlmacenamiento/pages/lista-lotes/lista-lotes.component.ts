@@ -31,12 +31,12 @@ export class ListaLotesComponent implements OnInit {
 
   onVerReporte(item: Inventario) {
     // Buscar el movimiento asociado al inventario seleccionado
-    this.almacenamientoService.getMovimientosInventario().subscribe((movimientos) => {
-      const movimiento = movimientos.find((m) => m.id_inventario === item.id_inventario);
+    this.almacenamientoService.getMovimientosInventario(item.id).subscribe((movimientos) => {
+      const movimiento = movimientos.find((m) => m.id_inventario === item.id);
       if (movimiento) {
         this.reporteSeleccionado = movimiento;
       } else {
-        console.warn('No se encontró movimiento para el inventario:', item.id_inventario);
+        console.warn('No se encontró movimiento para el inventario:', item.id);
       }
     });
   }

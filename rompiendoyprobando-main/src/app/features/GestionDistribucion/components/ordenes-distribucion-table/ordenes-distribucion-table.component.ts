@@ -10,21 +10,21 @@ import { OrdenDistribucion } from '../../models/ordenDistribucion.model';
   styleUrl: './ordenes-distribucion-table.component.css',
 })
 export class OrdenesDistribucionTableComponent {
-  @Input() ordenes: OrdenDistribucion[] | null = []; 
+  @Input() ordenes: OrdenDistribucion[] | null = [];
 
   displayedColumns: string[] = [
-    'idOrden', 
-    'idRequerimiento', 
-    'nombreUsuario', 
-    'area', 
-    'estado', 
-    'prioridad', 
-    'fechaEntregaEstimada', 
+    'id',
+    'idRequerimiento',
+    'nombreUsuario',
+    'area',
+    'estado',
+    'prioridad',
+    'fechaEntregaEstimada',
     'designarMovilidad',
-    'cancelarOrden' 
+    'cancelarOrden'
   ];
 
-  @Output() designarMovilidad = new EventEmitter<number>(); 
+  @Output() designarMovilidad = new EventEmitter<number>();
   @Output() cancelarOrden = new EventEmitter<number>();
 
   onDesignarMovilidad(idOrden: number): void {

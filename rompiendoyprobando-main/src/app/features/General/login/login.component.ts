@@ -36,14 +36,28 @@ export class LoginComponent {
     this.authService.login(username, password).subscribe({
       next: (user: AuthUser) => {
         console.log('Usuario autenticado:', user);
+
+        // DEBUG: Mostrar qué está recibiendo
+        alert(`Login Exitoso!\nUsuario: ${user.username}\nRol recibido: ${user.role}`);
+
         // Setear rol en PermissionService para filtrar navegación
         this.permissionService.setRole(user.role);
+
         // Obtener ruta inicial según rol
-        const firstRoute = this.permissionService.getFirstAccessibleRouteForRole(user.role) || '/';
-        this.router.navigate([firstRoute])
+        const firstRoute = this.permissionService.getFirstAccessibleRouteForRole(user.role);
+
+        alert(`Ruta calculada: ${firstRoute}`);
+
+        if (!firstRoute) {
+          alert('ERROR: No se encontró ruta para este rol. Se redirigirá al inicio (que puede volver al login).');
+        }
+
+        const target = firstRoute || '/';
+        this.router.navigate([target])
           .then(() => this.isLoading = false)
           .catch(err => {
             console.error('Error en navegación:', err);
+            alert('Error navegando: ' + err);
             this.isLoading = false;
           });
       },

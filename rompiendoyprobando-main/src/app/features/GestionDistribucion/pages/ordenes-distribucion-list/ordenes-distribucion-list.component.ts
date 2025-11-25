@@ -11,11 +11,11 @@ import { PopupCancelarOrdenComponent } from '../../overlays/popup-cancelar-orden
 
 @Component({
   selector: 'app-ordenes-distribucion-list.component',
-  standalone: false, 
+  standalone: false,
   templateUrl: './ordenes-distribucion-list.component.html',
   styleUrl: './ordenes-distribucion-list.component.css',
 })
-export class OrdenesDistribucionListComponent implements OnInit{
+export class OrdenesDistribucionListComponent implements OnInit {
   ordenes: OrdenDistribucion[] | null = null;
   isLoading: boolean = true;
   filtroBusqueda: string = '';
@@ -24,7 +24,7 @@ export class OrdenesDistribucionListComponent implements OnInit{
     private distribucionService: DistribucionService,
     private dialog: MatDialog,
     // private router: Router // Si hubiera navegación a una página de detalle
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.cargarOrdenes();
@@ -58,10 +58,10 @@ export class OrdenesDistribucionListComponent implements OnInit{
       return this.ordenes;
     }
     const filtro = this.filtroBusqueda.toLowerCase();
-    return this.ordenes.filter(o => 
-      o.idOrden.toString().includes(filtro) ||
-      o.nombreUsuario.toLowerCase().includes(filtro) ||
-      o.area.toLowerCase().includes(filtro)
+    return this.ordenes.filter(o =>
+      o.id.toString().includes(filtro) ||
+      (o.nombreUsuario && o.nombreUsuario.toLowerCase().includes(filtro)) ||
+      (o.area && o.area.toLowerCase().includes(filtro))
     );
   }
 
@@ -84,18 +84,18 @@ export class OrdenesDistribucionListComponent implements OnInit{
       }
     });
   }
-  
+
   /**
    * Actualiza el estado de la orden en el array local después de una confirmación.
    */
   actualizarEstadoOrdenLocal(idOrden: number, nuevoEstado: OrdenDistribucion['estado']): void {
     if (!this.ordenes) return;
-    
-    const index = this.ordenes.findIndex(o => o.idOrden === idOrden);
+
+    const index = this.ordenes.findIndex(o => o.id === idOrden);
     if (index !== -1) {
-        this.ordenes[index] = { ...this.ordenes[index], estado: nuevoEstado };
-        // Forzar la detección de cambios
-        this.ordenes = [...this.ordenes]; 
+      this.ordenes[index] = { ...this.ordenes[index], estado: nuevoEstado };
+      // Forzar la detección de cambios
+      this.ordenes = [...this.ordenes];
     }
   }
 
@@ -107,14 +107,14 @@ export class OrdenesDistribucionListComponent implements OnInit{
     };
 
     const dialogRef = this.dialog.open(PopupCancelarOrdenComponent, {
-        width: '450px',
-        data: data
+      width: '450px',
+      data: data
     });
 
     dialogRef.afterClosed().subscribe((result: ConfirmacionDialogResult | undefined) => {
-        if (result?.confirmado) {
-            this.ejecutarCancelacion(idOrden);
-        }
+      if (result?.confirmado) {
+        this.ejecutarCancelacion(idOrden);
+      }
     });
   }
 

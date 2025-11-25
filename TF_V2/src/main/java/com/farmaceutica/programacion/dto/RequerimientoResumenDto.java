@@ -14,6 +14,7 @@ public class RequerimientoResumenDto implements Serializable {
     Integer id;
     LocalDate fechaSolicitud;
     String idDepartamentoNombreDepartamento;
+    String idUsuarioSolicitanteNombreUsuario;
     @Size(max = 20)
     String prioridad;
     @Size(max = 50)

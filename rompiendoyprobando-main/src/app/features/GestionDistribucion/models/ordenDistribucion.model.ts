@@ -3,11 +3,13 @@
 // Usado en: ordenes-distribucion-table
 // --------------------------------------------------------
 export interface OrdenDistribucion {
-	idOrden: number;
+	id: number;
+	fechaDistribucion: string;
 	idRequerimiento: number;
-	nombreUsuario: string;
-	area: string;
-	estado: 'Pendiente' | 'Programada' | 'En ruta' | 'Entregada' | 'Cancelada';
-	prioridad: 'Alta' | 'Media' | 'Baja';
-	fechaEntregaEstimada: Date | string;
+	estado: string;
+	prioridad: string;
+	// Additional fields used by components for filtering/display
+	nombreUsuario?: string;
+	area?: string;
+	// fechaEntregaEstimada not in DTO, might need to be removed or kept if calculated
 }

@@ -10,16 +10,16 @@ import { EventEmitter } from '@angular/core';
   styleUrl: './monitoreo-vehiculos-table.component.css',
 })
 export class MonitoreoVehiculosTableComponent {
-  @Input() seguimientos: SeguimientoVehiculo[] | null = []; 
+  @Input() seguimientos: SeguimientoVehiculo[] | null = [];
 
   displayedColumns: string[] = [
-    'idSeguimiento', 
-    'idOrden', 
-    'idVehiculo', 
-    'estadoActual', 
+    'id',
+    'idOrdenDistId',
+    'idVehiculo',
+    'estadoActual',
     'ubicacionActual',
-    'fechaHoraActualizacion', 
-    'proximoDestino', 
+    'fechaHoraActualizacion',
+    'proximoDestino',
     'estimadoLlegada',
     'verLotes', // Acción 1
     'infoVehiculo', // Acción 2
@@ -35,7 +35,7 @@ export class MonitoreoVehiculosTableComponent {
   onVerLotes(idSeguimiento: number): void {
     this.verLotes.emit(idSeguimiento);
   }
-  
+
   onVerInfoVehiculo(idVehiculo: number): void {
     this.verInfoVehiculo.emit(idVehiculo);
   }

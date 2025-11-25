@@ -1,4 +1,3 @@
-// Ubicación: com/farmaceutica/almacenamiento/dto/LoteCreateDto.java
 
 package com.farmaceutica.almacenamiento.dto;
 

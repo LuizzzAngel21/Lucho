@@ -4,7 +4,7 @@ export const SIDEBAR_NAV_ITEMS: NavItem[] = [
   // --- MÓDULO PROGRAMACIÓN ---
   {
     displayName: 'Módulo Programación',
-    requiredRole: 'supervisor_prog', 
+    requiredRole: 'SUP_PROGRAMACION',
     children: [
       { displayName: 'REQ. NO ATENDIDOS', route: '/GestionProgramacion/lista-requerimiento' },
       { displayName: 'REQ. ATENDIDOS', route: '/GestionProgramacion/lista-requerimientos-atendidos' }
@@ -14,7 +14,7 @@ export const SIDEBAR_NAV_ITEMS: NavItem[] = [
   // --- MÓDULO DISTRIBUCIÓN ---
   {
     displayName: 'Módulo Distribución',
-    requiredRole: 'supervisor_dist',
+    requiredRole: 'SUP_DISTRIBUCION',
     children: [
       { displayName: 'ASIGNACIÓN DE VEHICULOS', route: '/GestionDistribucion/asignacion' },
       { displayName: 'MONITOREO DE VEHICULOS', route: '/GestionDistribucion/monitoreo' },
@@ -25,7 +25,7 @@ export const SIDEBAR_NAV_ITEMS: NavItem[] = [
   // --- MÓDULO COMPRAS ---
   {
     displayName: 'Módulo Compras',
-    requiredRole: 'supervisor_comp',
+    requiredRole: 'SUP_COMPRAS',
     children: [
       { displayName: 'LISTAS DE ORDENES', route: '/GestionCompras/solicitudes-pendientes' },
       { displayName: 'GESTION DE PROVEEDORES', route: '/GestionCompras/lista-proveedores' }
@@ -35,14 +35,14 @@ export const SIDEBAR_NAV_ITEMS: NavItem[] = [
   // --- MÓDULO ALMACEN ---
   {
     displayName: 'Módulo Almacén',
-    requiredRole: 'supervisor_alm',
+    requiredRole: 'SUP_ALMACEN',
     children: [
       { displayName: 'Gestionar Lotes', route: '/GestionAlmacenamiento/lotes' },
       { displayName: 'Ver Inventario', route: '/GestionAlmacenamiento/inventario' }
-    
+
     ]
   }
 ];
 
-//ACA SE LE PUEDE INGRESAR LA RUTA DEL ICONO/SVG 
+//ACA SE LE PUEDE INGRESAR LA RUTA DEL ICONO/SVG
 //OH YARA SI ES SVG DEPENDE DE CUAL ES PORQ ESA WBDA MAS LARGO, IGUAL SE PUEDE

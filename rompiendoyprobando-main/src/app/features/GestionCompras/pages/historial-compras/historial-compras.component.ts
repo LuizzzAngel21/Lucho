@@ -10,15 +10,15 @@ import { ComprasService } from '../../services/compras.service';
   styleUrl: './historial-compras.component.css',
 })
 
-export class HistorialComprasComponent implements OnInit{
+export class HistorialComprasComponent implements OnInit {
   ordenesHistoricas: OrdenCompraResumen[] | null = null;
   isLoading: boolean = true;
   filtroBusqueda: string = ''; // Modelo para la barra de búsqueda
 
   constructor(
     private comprasService: ComprasService,
-    private router: Router 
-  ) {}
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     this.cargarOrdenes();
@@ -53,9 +53,9 @@ export class HistorialComprasComponent implements OnInit{
       return this.ordenesHistoricas;
     }
     const filtro = this.filtroBusqueda.toLowerCase();
-    return this.ordenesHistoricas.filter(oc => 
+    return this.ordenesHistoricas.filter(oc =>
       oc.idOrden.toString().includes(filtro) ||
-      oc.idSolicitud.toString().includes(filtro) ||
+      (typeof oc.idSolicitud === 'object' ? oc.idSolicitud.id.toString() : oc.idSolicitud.toString()).includes(filtro) ||
       oc.proveedorPrincipal.toLowerCase().includes(filtro) ||
       oc.estadoOC.toLowerCase().includes(filtro)
     );

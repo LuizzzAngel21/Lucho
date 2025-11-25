@@ -30,7 +30,13 @@ export class PermissionService {
     if (!requiredRole) return true;
     const current = this.userRole();
     if (!current) return false;
-    return current === requiredRole;
+
+    // ADMIN tiene acceso a todo
+    if (current === 'ADMIN') return true;
+
+    console.log(`Checking access: Required=${requiredRole}, Current=${current}`);
+
+    return current === requiredRole || current.toUpperCase() === requiredRole.toUpperCase();
   }
 
   getFilteredNavItems(): NavItem[] {
@@ -38,7 +44,14 @@ export class PermissionService {
   }
 
   getFirstAccessibleRouteForRole(role: string): string | null {
-    const module = SIDEBAR_NAV_ITEMS.find(m => m.requiredRole === role);
+    // ADMIN puede acceder a cualquier módulo, redirigir al primero disponible
+    if (role === 'ADMIN' && SIDEBAR_NAV_ITEMS.length > 0) {
+      const firstModule = SIDEBAR_NAV_ITEMS[0];
+      const child = firstModule.children?.find(c => !!c.route);
+      return child?.route || null;
+    }
+
+    const module = SIDEBAR_NAV_ITEMS.find(m => m.requiredRole?.toUpperCase() === role.toUpperCase());
     if (!module) return null;
     // Tomar primer child con route
     const child = module.children?.find(c => !!c.route);

@@ -3,10 +3,15 @@
 // Usado en: combobox de asignacion-vehiculo-lote-table
 // --------------------------------------------------------
 export interface Vehiculo {
-	idVehiculo: number;
+	id: number;
 	placa: string;
-	capacidad: number; // Ej: en toneladas o metros cúbicos
-	tipoVehiculo: string; // Ej: Furgón, Camioneta, Refrigerado
-	condicionTransporte: string; // Ej: Ambiente, Frío (Debe hacer match con Producto.condicionesTransporte)
-	disponible: boolean; // Si puede ser asignado
+	marca?: string;
+	modelo?: string;
+	tipoVehiculo?: string;
+	estado?: string;
+	// capacidad and condicionTransporte removed as they are not in VehiculoDto
+	// Keeping them as optional if frontend logic relies on them, but they won't come from backend directly
+	capacidad?: number;
+	condicionTransporte?: string;
+	disponible?: boolean;
 }

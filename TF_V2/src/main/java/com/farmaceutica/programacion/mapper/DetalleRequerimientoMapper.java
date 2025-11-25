@@ -6,7 +6,7 @@ import org.mapstruct.*;
 
 import java.util.List;
 
-@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING)
+@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING, uses = {ProductoMapperHelper.class})
 public interface DetalleRequerimientoMapper {
 
     // --- CORREGIDO: Ignorar el objeto Producto ---
@@ -14,6 +14,7 @@ public interface DetalleRequerimientoMapper {
     DetalleRequerimiento toEntity(DetalleRequerimientoDto detalleRequerimientoDto);
 
     @InheritInverseConfiguration(name = "toEntity")
+    @Mapping(target = "idProducto", source = "idProducto", qualifiedByName = "productoToProductoResumenDto")
     DetalleRequerimientoDto toDto(DetalleRequerimiento detalleRequerimiento);
 
     @InheritConfiguration(name = "toEntity")

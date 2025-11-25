@@ -5,9 +5,9 @@
  */
 export interface OrdenCompraResumen {
   idOrden: number;
-  idSolicitud: number;
-  proveedorPrincipal: string; // El proveedor que ganó la mayor parte de la OC o el proveedor clave
-  fechaGeneracion: Date | string;
+  idSolicitud: any; // Backend returns SolicitudCompra object
+  proveedorPrincipal: string; // This might need mapping if backend doesn't provide it directly in the summary
+  fechaGeneracion: string;
   montoTotal: number;
-  estadoOC: 'Generada' | 'Enviada' | 'Recibida Parcial' | 'Completada' | 'Cancelada';
+  estadoOC: string; // Align with backend strings (Pendiente, etc.)
 }

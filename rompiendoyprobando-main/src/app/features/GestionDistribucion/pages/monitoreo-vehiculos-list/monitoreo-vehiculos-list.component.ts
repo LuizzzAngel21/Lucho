@@ -16,11 +16,11 @@ import { switchMap, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-monitoreo-vehiculos-list.component',
-  standalone: false, 
+  standalone: false,
   templateUrl: './monitoreo-vehiculos-list.component.html',
   styleUrl: './monitoreo-vehiculos-list.component.css',
 })
-export class MonitoreoVehiculosListComponent implements OnInit{
+export class MonitoreoVehiculosListComponent implements OnInit {
   seguimientos: SeguimientoVehiculo[] | null = null;
   isLoading: boolean = true;
   filtroBusqueda: string = '';
@@ -29,7 +29,7 @@ export class MonitoreoVehiculosListComponent implements OnInit{
     private distribucionService: DistribucionService,
     private dialog: MatDialog,
     private router: Router // Para navegar al detalle de lotes
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.cargarSeguimientos();
@@ -63,9 +63,9 @@ export class MonitoreoVehiculosListComponent implements OnInit{
       return this.seguimientos;
     }
     const filtro = this.filtroBusqueda.toLowerCase();
-    return this.seguimientos.filter(s => 
-      s.idSeguimiento.toString().includes(filtro) ||
-      s.placaVehiculo.toLowerCase().includes(filtro) ||
+    return this.seguimientos.filter(s =>
+      s.id.toString().includes(filtro) ||
+      s.idVehiculo.placa.toLowerCase().includes(filtro) ||
       s.proximoDestino.toLowerCase().includes(filtro)
     );
   }
@@ -99,15 +99,15 @@ export class MonitoreoVehiculosListComponent implements OnInit{
 
     // 🛑 Usando el nuevo PopupConfirmacionEntregaComponent
     const dialogRef = this.dialog.open(PopupConfirmacionEntregaComponent, {
-        width: '450px',
-        data: data
+      width: '450px',
+      data: data
     });
 
     // 2. Esperar la confirmación
     dialogRef.afterClosed().subscribe((result: ConfirmacionDialogResult | undefined) => {
-        if (result?.confirmado) {
-            this.ejecutarConfirmacionEntrega(idOrden);
-        }
+      if (result?.confirmado) {
+        this.ejecutarConfirmacionEntrega(idOrden);
+      }
     });
   }
 
@@ -116,7 +116,7 @@ export class MonitoreoVehiculosListComponent implements OnInit{
    */
   ejecutarConfirmacionEntrega(idOrden: number): void {
     // Buscar el seguimiento asociado para actualizar el estado visual.
-    const seguimiento = this.seguimientos?.find(s => s.idOrden === idOrden);
+    const seguimiento = this.seguimientos?.find(s => s.idOrdenDistId === idOrden);
 
     if (!seguimiento) return;
 
@@ -127,9 +127,9 @@ export class MonitoreoVehiculosListComponent implements OnInit{
         next: () => {
           alert(`Entrega de Orden #${idOrden} confirmada con éxito. El seguimiento ha finalizado.`);
           // 🛑 Actualizar el estado del seguimiento localmente (o recargar la lista)
-          seguimiento.estadoActual = 'Entregada'; 
-          this.seguimientos = this.seguimientos!.filter(s => s.idOrden !== idOrden);
-          this.seguimientos = [...this.seguimientos!]; 
+          seguimiento.estadoActual = 'Entregada';
+          this.seguimientos = this.seguimientos!.filter(s => s.idOrdenDistId !== idOrden);
+          this.seguimientos = [...this.seguimientos!];
         },
         error: (err) => {
           console.error('Error al confirmar entrega:', err);
@@ -141,48 +141,48 @@ export class MonitoreoVehiculosListComponent implements OnInit{
 
   onRegistrarIncidencia(seguimiento: SeguimientoVehiculo): void {
     // Usamos el ID de la orden (seguimiento.idOrden) para buscar sus lotes
-    const idOrden = seguimiento.idOrden;
-    
+    const idOrden = seguimiento.idOrdenDistId;
+
     // 1. Mostrar estado de carga mientras se obtienen los lotes
     this.isLoading = true;
 
     // 2. Llamar al servicio para obtener los detalles de transporte (lotes) de esta orden/seguimiento
-    this.distribucionService.getLotesBySeguimientoId(seguimiento.idSeguimiento)
-        .pipe(
-            finalize(() => this.isLoading = false)
-        )
-        .subscribe({
-            next: (detallesLotes) => {
-                // 3. Transformar la lista de objetos a un simple array de IDs (number[])
-                const lotesIds = detallesLotes.map(d => d.idLote);
-                
-                // 4. Construir la data para el diálogo
-                const data: IncidenciaDialogData = {
-                    idVehiculo: seguimiento.idVehiculo,
-                    idOrdenDist: idOrden,
-                    idUsuarioReporta: 1, // Mock ID
-                    idDetalleDist: null, 
-                    lotesDisponibles: lotesIds // 🛑 ¡ARRAY DE LOTES CARGADO!
-                };
+    this.distribucionService.getLotesBySeguimientoId(seguimiento.id)
+      .pipe(
+        finalize(() => this.isLoading = false)
+      )
+      .subscribe({
+        next: (detallesLotes) => {
+          // 3. Transformar la lista de objetos a un simple array de IDs (number[])
+          const lotesIds = detallesLotes.map(d => d.idLote);
 
-                // 5. Abrir el diálogo
-                const dialogRef = this.dialog.open(PopupCrearIncidenciaComponent, {
-                    width: '600px',
-                    height: '800px',
-                    data: data
-                });
+          // 4. Construir la data para el diálogo
+          const data: IncidenciaDialogData = {
+            idVehiculo: seguimiento.idVehiculo.id, // Extract id from nested object
+            idOrdenDist: idOrden,
+            idUsuarioReporta: 1, // Mock ID
+            idDetalleDist: null,
+            lotesDisponibles: lotesIds // 🛑 ¡ARRAY DE LOTES CARGADO!
+          };
 
-                // 6. Manejar el resultado
-                dialogRef.afterClosed().subscribe((result: IncidenciaDialogResult | undefined) => {
-                    if (result?.success) {
-                        alert('Incidencia registrada con éxito para la Orden ' + idOrden);
-                    }
-                });
-            },
-            error: (error) => {
-                console.error('Error al cargar lotes para incidencia:', error);
-                alert('No se pudo cargar la lista de lotes disponibles para el reporte de incidencia.');
+          // 5. Abrir el diálogo
+          const dialogRef = this.dialog.open(PopupCrearIncidenciaComponent, {
+            width: '600px',
+            height: '800px',
+            data: data
+          });
+
+          // 6. Manejar el resultado
+          dialogRef.afterClosed().subscribe((result: IncidenciaDialogResult | undefined) => {
+            if (result?.success) {
+              alert('Incidencia registrada con éxito para la Orden ' + idOrden);
             }
-        });
+          });
+        },
+        error: (error) => {
+          console.error('Error al cargar lotes para incidencia:', error);
+          alert('No se pudo cargar la lista de lotes disponibles para el reporte de incidencia.');
+        }
+      });
   }
 }

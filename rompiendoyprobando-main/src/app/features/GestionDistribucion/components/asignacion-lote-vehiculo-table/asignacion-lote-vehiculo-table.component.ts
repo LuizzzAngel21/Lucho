@@ -7,23 +7,23 @@ import { Vehiculo } from '../../models/vehiculo.model';
 
 @Component({
   selector: 'app-asignacion-lote-vehiculo-table',
-  standalone: false, 
+  standalone: false,
   templateUrl: './asignacion-lote-vehiculo-table.component.html',
   styleUrl: './asignacion-lote-vehiculo-table.component.css',
 })
 export class AsignacionLoteVehiculoTableComponent {
-  @Input() detalles: DetalleOrdenDistribucion[] | null = []; 
+  @Input() detalles: DetalleOrdenDistribucion[] | null = [];
 
   displayedColumns: string[] = [
-    'idLote', 
-    'nombreProducto', 
-    'cantidadProducto', 
+    'idLote',
+    'nombreProducto',
+    'cantidadProducto',
     'condicionTransporte',
-    'asignacionVehiculo' 
+    'asignacionVehiculo'
   ];
 
   // Evento que se emite cuando se cambia un vehículo asignado
-  @Output() asignacionCambio = new EventEmitter<DetalleOrdenDistribucion>(); 
+  @Output() asignacionCambio = new EventEmitter<DetalleOrdenDistribucion>();
 
   /**
    * Se dispara cuando el usuario selecciona un vehículo del combobox.
@@ -37,8 +37,8 @@ export class AsignacionLoteVehiculoTableComponent {
    * Formatea la opción del vehículo para mostrar la capacidad y el tipo.
    */
   getVehiculoLabel(vehiculo: Vehiculo): string {
-    return `#${vehiculo.idVehiculo} | Cap: ${vehiculo.capacidad} | Tipo: ${vehiculo.tipoVehiculo}`;
+    return `#${vehiculo.id} | ${vehiculo.placa} | ${vehiculo.tipoVehiculo || 'N/A'}`;
   }
 
-  
+
 }

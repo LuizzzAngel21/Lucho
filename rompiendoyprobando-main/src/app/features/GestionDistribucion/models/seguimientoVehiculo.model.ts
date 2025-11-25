@@ -3,13 +3,16 @@
 // Usado en: monitoreo-vehiculos-table
 // --------------------------------------------------------
 export interface SeguimientoVehiculo {
-	idSeguimiento: number;
-	idOrden: number;
-	idVehiculo: number;
-	placaVehiculo: string; // Incluimos la placa para el display
-	estadoActual: 'En Ruta' | 'En Entrega' | 'Cancelado' | 'Retrasado' | 'Entregada';
-	ubicacionActual: string; // Coordenadas o descripción de la ubicación
-	fechaHoraActualizacion: Date | string; // Instant de Java
+	id: number;
+	idVehiculo: { id: number; placa: string };
+	idOrdenDistId: number; // Note: DTO has idOrdenDistId
+	estadoActual: string;
+	ubicacionActual: string;
+	fechaHoraActualizacion: string;
 	proximoDestino: string;
-	estimadoLlegada: Date | string;
+	// Additional computed/convenience properties for components
+	idSeguimiento?: number; // Alias for id
+	placaVehiculo?: string; // Derived from idVehiculo.placa
+	idOrden?: number; // Alias for idOrdenDistId
+	// estimadoLlegada not in DTO
 }

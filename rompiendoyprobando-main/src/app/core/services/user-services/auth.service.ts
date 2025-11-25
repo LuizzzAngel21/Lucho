@@ -1,38 +1,53 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, throwError } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
+import { environment } from '../../../../environments/environment';
 
 export interface AuthUser {
   username: string;
-  role: string; // supervisor_alm | supervisor_prog | supervisor_comp | supervisor_dist
+  role: string;
+  email?: string;
+  id?: number;
 }
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  // Catálogo de usuarios mock con roles diferenciados
-  private mockUsers: Array<{ username: string; password: string; role: string }> = [
-    { username: 'supervisor_alm', password: 'alm123', role: 'supervisor_alm' },
-    { username: 'supervisor_prog', password: 'prog123', role: 'supervisor_prog' },
-    // Se puede extender con compras / distribución
-    { username: 'supervisor_comp', password: 'comp123', role: 'supervisor_comp' },
-    { username: 'supervisor_dist', password: 'dist123', role: 'supervisor_dist' },
-    // Usuario legacy admin que puede probar almacén por defecto
-    { username: 'admin', password: 'admin', role: 'supervisor_comp' }
-  ];
+  // Ahora apuntamos a la URL real del backend
+  private apiUrl = `${environment.apiUrl}/api/auth`;
+
+  constructor(private http: HttpClient) { }
 
   login(username: string, password: string): Observable<AuthUser> {
-    const found = this.mockUsers.find(u => u.username === username && u.password === password);
-    if (!found) {
-      return throwError(() => new Error('Credenciales inválidas'));
-    }
-    const user: AuthUser = { username: found.username, role: found.role };
-    localStorage.setItem('user', JSON.stringify(user));
-    return of(user);
+    // Enviamos POST al backend real
+    return this.http.post<any>(`${this.apiUrl}/login`, { nombreUsuario: username, contrasena: password }).pipe(
+      map(response => {
+        if (response.success) {
+          const data = response.data;
+          const user: AuthUser = {
+            username: data.nombreUsuario,
+            role: data.rol,
+            id: data.idUsuario
+          };
+          // Guardamos el usuario en el navegador
+          localStorage.setItem('user', JSON.stringify(user));
+          return user;
+        }
+        throw new Error('Error en login');
+      }),
+      catchError(err => {
+        console.error('Error de autenticación:', err);
+        return throwError(() => new Error('Credenciales inválidas'));
+      })
+    );
   }
 
-  register(data: any): Observable<boolean> {
-    // Registro simulado: en un escenario real se validaría y persistiría
-    console.log('Simulación de registro:', data);
-    return of(true);
+
+  // --- AGREGA ESTO AQUÍ ---
+  register(data: any): Observable<any> {
+    // Intentamos enviarlo al backend. Si no tienes endpoint de registro, 
+    // dará error 404 al usarlo, pero arregla la compilación por ahora.
+    return this.http.post(`${this.apiUrl}/register`, data);
   }
 
   logout(): void {

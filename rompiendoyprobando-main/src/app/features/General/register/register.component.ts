@@ -35,7 +35,7 @@ export class RegisterComponent {
         console.log('Usuario registrado con éxito');
         this.router.navigate(['/login']);
       },
-      error: (err) => {
+      error: (err: any) => {
         console.error('Error al registrarse:', err);
         this.isLoading = false;
       }

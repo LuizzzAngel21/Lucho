@@ -28,7 +28,7 @@ export class ListaInventarioTableComponent {
   private selectedId: number | null = null;
 
   isSelected(row: Inventario): boolean {
-    return this.selectedId === row.id_inventario;
+    return this.selectedId === row.id;
   }
 
   toggleSelection(row: Inventario) {
@@ -36,7 +36,7 @@ export class ListaInventarioTableComponent {
       this.selectedId = null;
       this.selectedChange.emit(null);
     } else {
-      this.selectedId = row.id_inventario;
+      this.selectedId = row.id;
       this.selectedChange.emit(row);
     }
   }

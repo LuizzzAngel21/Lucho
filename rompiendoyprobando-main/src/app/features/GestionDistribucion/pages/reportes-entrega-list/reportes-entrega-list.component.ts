@@ -19,7 +19,7 @@ export class ReportesEntregaListComponent implements OnInit {
   constructor(
     private distribucionService: DistribucionService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.cargarReporteOrdenes();
@@ -53,10 +53,10 @@ export class ReportesEntregaListComponent implements OnInit {
       return this.ordenesEntregadas;
     }
     const filtro = this.filtroBusqueda.toLowerCase();
-    return this.ordenesEntregadas.filter(o => 
-      o.idOrden.toString().includes(filtro) ||
-      o.nombreUsuario.toLowerCase().includes(filtro) ||
-      o.area.toLowerCase().includes(filtro)
+    return this.ordenesEntregadas.filter(o =>
+      o.id.toString().includes(filtro) ||
+      (o.nombreUsuario && o.nombreUsuario.toLowerCase().includes(filtro)) ||
+      (o.area && o.area.toLowerCase().includes(filtro))
     );
   }
 

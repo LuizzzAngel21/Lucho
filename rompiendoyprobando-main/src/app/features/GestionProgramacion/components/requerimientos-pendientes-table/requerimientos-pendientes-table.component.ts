@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { DetalleRequerimiento } from '../../models/detalle_requerimiento';
+import { RequerimientoPendiente } from '../../services/programacion.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -9,22 +9,22 @@ import { Router } from '@angular/router';
   styleUrls: ['./requerimientos-pendientes-table.component.css']
 })
 export class RequerimientosPendientesTableComponent {
-  @Input() data: DetalleRequerimiento[] = [];
+  @Input() data: RequerimientoPendiente[] = [];
 
   displayedColumns: string[] = [
-    'id_requerimiento',
-    'id_producto',
-    'cantidad',
-    'observacion',
-    'fecha_creacion',
-    'fecha_actual',
+    'id_req',
+    'id_usr',
+    'id_dep',
+    'fecha',
+    'prioridad',
+    'status_req',
     'accion'
   ];
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) { }
 
-  atender(row: DetalleRequerimiento) {
+  atender(row: RequerimientoPendiente) {
     // Navega a disponibilidad-producto pasando id del requerimiento
-    this.router.navigate(['/GestionProgramacion/disponibilidad-producto/', row.id_requerimiento]);
+    this.router.navigate(['/GestionProgramacion/disponibilidad-producto/', row.id_req]);
   }
 }

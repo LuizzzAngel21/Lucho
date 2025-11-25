@@ -17,7 +17,7 @@ export class ListaInventarioComponent implements OnInit {
   reporteSeleccionado: MovimientoInventario | null = null;
   searchTerm: string = '';
 
-  constructor(private almacenamientoService: AlmacenamientoService, private router: Router) {}
+  constructor(private almacenamientoService: AlmacenamientoService, private router: Router) { }
 
   ngOnInit(): void {
     this.almacenamientoService.getInventario().subscribe((data) => {
@@ -33,7 +33,7 @@ export class ListaInventarioComponent implements OnInit {
       return;
     }
     this.inventarioFiltrado = this.inventario.filter((item) =>
-      item.id_inventario.toString().includes(term)
+      item.id.toString().includes(term)
     );
   }
 
@@ -49,12 +49,12 @@ export class ListaInventarioComponent implements OnInit {
     // Navegación asumida hacia una ruta de reporte de lote.
     // Ajustar si se requiere abrir overlay/dialog en lugar de navegar.
     this.router.navigate(['/GestionAlmacenamiento/reporte-lote'], {
-      queryParams: { lote: item.id_lote },
+      queryParams: { lote: item.idLote.id },
     });
   }
 
   registrarSalida() {
-    const inventarioId = this.selected?.id_inventario;
+    const inventarioId = this.selected?.id;
     this.router.navigate(['/GestionAlmacenamiento/registro-salida'], {
       queryParams: { inventario: inventarioId ?? '' },
     });

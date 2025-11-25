@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
   templateUrl: './solicitudes-list.component.html',
   styleUrl: './solicitudes-list.component.css',
 })
-export class SolicitudesListComponent implements OnInit{
+export class SolicitudesListComponent implements OnInit {
 
   solicitudesPendientes: SolicitudCompra[] | null = null;
   isLoading: boolean = true;
@@ -18,7 +18,7 @@ export class SolicitudesListComponent implements OnInit{
   constructor(
     private comprasService: ComprasService,
     private router: Router // Inyección del Router para navegación
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.cargarSolicitudes();
@@ -48,9 +48,9 @@ export class SolicitudesListComponent implements OnInit{
    */
   onVerCotizacion(solicitud: SolicitudCompra): void {
     // 💡 Ejecuta la navegación a la página de cotización con el ID
-    this.router.navigate(['/GestionCompras/cotizacion-generacion', solicitud.idSolicitud]);
+    this.router.navigate(['/GestionCompras/cotizacion-generacion', solicitud.id]);
   }
-  
+
   // 💡 Implementar filtro de búsqueda
   getSolicitudesFiltradas(): SolicitudCompra[] | null {
     if (!this.solicitudesPendientes) {
@@ -60,10 +60,10 @@ export class SolicitudesListComponent implements OnInit{
       return this.solicitudesPendientes;
     }
     const filtro = this.filtroBusqueda.toLowerCase();
-    return this.solicitudesPendientes.filter(s => 
-      s.solicitante.toLowerCase().includes(filtro) ||
-      s.area.toLowerCase().includes(filtro) ||
-      s.idSolicitud.toString().includes(filtro)
+    return this.solicitudesPendientes.filter(s =>
+      (s.solicitante?.toLowerCase().includes(filtro) ?? false) ||
+      (s.area?.toLowerCase().includes(filtro) ?? false) ||
+      s.id.toString().includes(filtro)
     );
   }
 }
