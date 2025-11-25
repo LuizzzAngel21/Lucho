@@ -1,0 +1,51 @@
+services:
+  frontend:
+    build:
+      context: ./rompiendoyprobando-main
+      args:
+        NG_BUILD_CONFIG: production
+    image: lucho-frontend:latest
+    restart: unless-stopped
+    ports:
+      - "4200:80"
+    depends_on:
+      - backend
+
+  backend:
+    build:
+      context: ./TF_V2
+      args:
+        JAVA_VERSION: 17
+    image: lucho-backend:latest
+    restart: unless-stopped
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/farmaceutica_db
+      SPRING_DATASOURCE_USERNAME: usuario_app
+      SPRING_DATASOURCE_PASSWORD: App123!
+      SPRING_JPA_PROPERTIES_HIBERNATE_DEFAULT_SCHEMA: farmacia_clean
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: farmaceutica_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres -d farmaceutica_db" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pgdata:
